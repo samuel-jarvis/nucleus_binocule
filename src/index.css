@@ -8,8 +8,6 @@
 
 *, html {
   font-family: "DM Sans", sans-serif;
-  font-family: "Syne", sans-serif;
-  /* overflow-x: hidden; */
 }
 
 .navLink a.active {
