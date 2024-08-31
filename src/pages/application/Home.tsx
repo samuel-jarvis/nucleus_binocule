@@ -1,11 +1,10 @@
-import { useState } from "react";
+// import { useState } from "react";
 import HomeIllustration from "../../assets/illustrations/home_illustration.png";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
-import { IoIosSearch } from "react-icons/io";
+import SearchNucleus from "./components/SearchNucleus";
 
 const Home = () => {
-  const [searchInput, setSearchInput] = useState("");
 
   return (
     <div className="px-4">
@@ -89,20 +88,11 @@ const Home = () => {
 
       <div>
         <h2 className="text-xl font-medium text-black mt-8">Search Existing</h2>
+        <p className="text-gray-600 text-sm">
+          Search for existing spatial templates by title or description
+        </p>
 
-        <div className="mt-4 flex items-center bg-[#f4f5f7] p-4 rounded-lg">
-          <input
-            type="text"
-            className="w-full bg-transparent outline-none"
-            placeholder="Search templates..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-
-          <div>
-            <IoIosSearch className="text-2xl text-gray-600 cursor-pointer" />
-          </div>
-        </div>
+        <SearchNucleus />
       </div>
     </div>
   );

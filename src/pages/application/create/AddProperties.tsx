@@ -1,42 +1,44 @@
 import { useState } from "react";
 import { FaMinus } from "react-icons/fa6";
+import AddFieldsModal from "./AddFieldsModal";
 
-type Property = {
-  title: string;
-  description: string;
-}
+type IProperty = {
+  value: string;
+  type: string;
+  label: string;
+};
 
-type Properties = {
-  properties: Property[];
-}
+type Props = {
+  fields: IProperty[];
+  setFields: (fields: IProperty[]) => void;
+  setSelectedTab: (value: string) => void;
+};
 
-const AddProperties = () => {
-  const [properties, setProperties] = useState<Properties>({ properties: [] });
+const AddProperties = ({ fields, setFields, setSelectedTab }: Props) => {
+  const [singleField, setSingleField] = useState({} as IProperty | null);
 
-  const [property, setProperty] = useState<Property>({ title: "", description: "" });
-
-  const handleAddProperty = () => {
-    setProperties({ properties: [...properties.properties, property] });
-    setProperty({ title: "", description: "" });
+  const handleUpdateField = (index: number) => {
+    console.log(fields[index]);
+    setSingleField(fields[index]);
   };
 
-  const handleRemoveProperty = (index: number) => {
-    const newProperties = properties.properties.filter((_, i) => i !== index);
-    setProperties({ properties: newProperties });
+  const handleRemoveField = (index: number) => {
+    const newFields = fields.filter((_, i) => i !== index);
+    setFields(newFields);
   };
-
-  
 
   return (
-    <div className="px-6 mb-18">
-      <div className="px-4 mb-10">
+    <div className="mb-18">
+      <div className="mb-10">
         <div className="my-8">
           <h2 className="text-2xl font-semibold text-gray-700 text-center">
             + Add information components
           </h2>
 
           <p className="text-center mt-4">
-            <span className="text-blue-700 font-medium mr-1 underline cursor-pointer">Add</span>
+            <span className="text-blue-700 font-medium mr-1 underline cursor-pointer">
+              Add
+            </span>
             unique property, attributes and other information that describes
             this object in the real world{" "}
             <span className="text-blue-700 font-medium ml-1 underline cursor-pointer">
@@ -47,61 +49,63 @@ const AddProperties = () => {
       </div>
 
       <div className="mt-6">
-        <h3 className="text-xl font-semibold text-black">Add Property</h3>
+        <div className="flex  justify-between items-center">
+          <h3 className="text-xl font-semibold text-black">Properties</h3>
 
-        <div className="mt-4">
-          <input
-            type="text"
-            placeholder="Title"
-            value={property.title}
-            onChange={(e) => setProperty({ ...property, title: e.target.value })}
-            className="w-full p-2 border-2 rounded-lg"
+          <AddFieldsModal
+            fields={fields}
+            setFields={setFields}
+            updateField={singleField}
+            setSingleField={setSingleField}
           />
         </div>
 
-        <div className="mt-4">
-          <textarea
-            placeholder="Description"
-            minLength={5}
-            maxLength={150}
-            value={property.description}
-            onChange={(e) => setProperty({ ...property, description: e.target.value })}
-            className="w-full p-2 border-2 rounded-lg"
-          />
-        </div>
+        <p  className="text-sm text-gray-600 mt-2">
+          Click on a property to update it
+        </p>
 
         <div className="mt-4">
-          <button
-            onClick={handleAddProperty}
-            className="bg-primary text-white p-2 px-4 rounded-lg"
-          >
-            Add Property
-          </button>
+          {fields?.length > 0 &&
+            fields.map((field, index) => (
+              <div
+                key={index}
+                className="bg-[#f4f5f7] p-4 rounded-lg flex justify-between items-center mb-4"
+                onClick={() => handleUpdateField(index)}
+              >
+                <div>
+                  <h4 className="font-semibold">{field.label}</h4>
+                  <p className="text-sm text-gray-600">{field.value}</p>
+                </div>
+
+                <div>
+                  <button
+                    onClick={() => handleRemoveField(index)}
+                    className="bg-white text-red-700 p-2 rounded-lg"
+                  >
+                    <FaMinus />
+                  </button>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
 
       <div className="mt-6">
-        <h3 className="text-xl font-semibold text-black">Properties</h3>
+        <button
+          onClick={() => setSelectedTab("associations")}
+          className="bg-primary text-white p-2 px-4 rounded-lg block w-full"
+        >
+          Continue
+        </button>
+      </div>
 
-        <div className="mt-4">
-          {properties.properties.map((property, index) => (
-            <div key={index} className="bg-[#f4f5f7] p-4 rounded-lg flex justify-between items-center">
-              <div>
-                <h4 className="font-semibold">{property.title}</h4>
-                <p className="text-sm text-gray-600">{property.description}</p>
-              </div>
-
-              <div>
-                <button
-                  onClick={() => handleRemoveProperty(index)}
-                  className="bg-white text-red-700 p-2 rounded-lg"
-                >
-                  <FaMinus />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+      <div className="mt-6">
+        <button
+          onClick={() => setSelectedTab("basic_info")}
+          className="bg-white text-primary p-2 px-4 rounded-lg block w-full"
+        >
+          Back
+        </button>
       </div>
     </div>
   );

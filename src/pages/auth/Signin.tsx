@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FullLogo from "../../assets/logo/full_logo.png";
+import AuthApi from "../../api/authApi";
+import { useDispatch } from "react-redux";
+import { login } from "../../../reducers/authSlice";
 
 const Signin = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const [signinData, setSigninData] = useState({
     email: "",
@@ -22,10 +26,26 @@ const Signin = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    navigate('/home')
-
     setLoading(true);
     setError("");
+
+    AuthApi.login(signinData.email, signinData.password)
+      .then((res) => {
+        setLoading(false);
+        console.log(res);
+        const payload = {
+          token: res.data.token,
+          user: res.data,
+        };
+        
+        dispatch(login(payload))
+        navigate("/home");
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+        setError("Something went wrong. Please try again later.");
+      });
   };
 
   return (

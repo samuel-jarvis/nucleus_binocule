@@ -21,7 +21,7 @@ const getTokenFromLocalStorage = () => {
 
 const getUserFromLocalStorage = () => {
   try {
-    const user = localStorage.getItem("whatIfUser");
+    const user = localStorage.getItem("byte_user");
     if (user && user !== undefined) {
       return JSON.parse(user);
     } else {
@@ -44,20 +44,20 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<AuthState["user"]>) => {
       localStorage.setItem("token", action.payload.token);
-      localStorage.setItem("whatIfUser", JSON.stringify(action.payload.user));
+      localStorage.setItem("byte_user", JSON.stringify(action.payload.user));
       state.token = action.payload.token;
       state.isAuthenticated = true;
       state.user = action.payload.user;
     },
     logout: (state) => {
       localStorage.removeItem("token");
-      localStorage.removeItem("whatIfUser");
+      localStorage.removeItem("byte_user");
       state.token = null;
       state.isAuthenticated = false;
       state.user = null;
     },
     updateUser: (state, action: PayloadAction<AuthState["user"]>) => {
-      localStorage.setItem("whatIfUser", JSON.stringify(action.payload));
+      localStorage.setItem("byte_user", JSON.stringify(action.payload));
       state.user = action.payload;
     },
   },

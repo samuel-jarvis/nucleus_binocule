@@ -1,182 +1,131 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import * as Tabs from "@radix-ui/react-tabs";
+import BasicInfo from "./BasicInfo";
+import AddProperties from "./AddProperties";
+import AddAssociations from "./AddAssociations";
+import AddVisuals from "./AddVisuals";
+import { NucleusApi } from "../../../api/nucleusApi";
+import { toast } from "react-toastify";
+
+// type RwoForm = {
+//   natureOfObject: "natural";
+//   primaryClass: "static";
+//   category: "education";
+//   title: string;
+//   parentObject: {
+//     object: string;
+//   }[];
+//   objectDescription: string;
+//   fields: {
+//     value: string;
+//     type: "text";
+//     label: string;
+//   }[];
+//   states: {
+//     value: string;
+//     type: "text";
+//     label: string;
+//   }[];
+//   icon: string;
+// };
 
 const CreateRWO = () => {
   const navigate = useNavigate();
+  
+  const [natureOfObject, setNatureOfObject] = useState("natural");
+  const [primaryClass, setPrimaryClass] = useState("static");
+  const [category, setCategory] = useState("education");
+  const [title, setTitle] = useState("");
+  const [objectDescription, setObjectDescription] = useState("");
+  // const [parentObject, setParentObject] = useState([{ object: "" }]);
 
-  const TopLevelObject = ["Physical", "Digital", "Hybrid"];
+  const [fields, setFields] = useState<any>([]);
 
-  const TopLevelType = [
-    {
-      name: "Human",
-      description: "A human being.",
-    },
-    {
-      name: "Things",
-      description: "Other Living and Non-living things.",
-    },
-    {
-      name: "Spaces",
-      description: "Boundary of defined space",
-    },
-  ];
+  // const [states, setStates] = useState([
+  //   { value: "", type: "text", label: "" },
+  // ]);
 
-  const [rwoForm, setRwoForm] = useState({
-    objectNature: "",
-    topLevelObject: "",
-    category: "",
-    parentTemplate: "",
-    mainObjectTitle: "",
-    description: "",
-  });
+  // visuals
+  const [icon, setIcon] = useState("");
+  const [image, setImage] = useState("");
 
-  const handleNextClick = () => {
-    navigate("/create/rwo/add-properties");
+  const [selectedTab, setSelectedTab] = useState("basic_info");
+
+  const handleSubmission = () => {
+    const data = {
+      natureOfObject: 'natural',
+      primaryClass: 'static',
+      category,
+      title,
+      objectDescription,
+      fields,
+      icon: "https://img.freepik.com/free-photo/3d-black-gift-box-with-gold-ribbon-bow_107791-17735.jpg"
+    };
+
+    console.log(data);
+
+    NucleusApi.createNucleus(data)
+      .then((res) => {
+        console.log(res);
+        toast.success("RWO created successfully");
+        navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <div className="px-4 mb-10">
-      <div className="my-8">
-        <h2 className="text-2xl font-semibold text-gray-700 text-center">
-          Make sure a template for this object doesn’t already exist.{" "}
-        </h2>
-
-        <p className="text-center mt-4">
-          Make sure a template for this object doesn’t already exist.
-        </p>
-      </div>
-
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold text-black">Top Level Object</h3>
-
-        <div className="grid grid-cols-3 gap-4 mt-4">
-          {TopLevelObject.map((object) => (
-            <div
-              key={object}
-              className={`${
-                rwoForm.topLevelObject === object
-                  ? "bg-black text-white"
-                  : "bg-white text-black"
-              } p-2 rounded-lg cursor-pointer border-2 text-center`}
-              onClick={() => setRwoForm({ ...rwoForm, topLevelObject: object })}
-            >
-              {object}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* loop through topLevelType and highlight selected one */}
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold text-black">Top Level Type</h3>
-
-        <div className="grid gap-3 mt-4">
-          {TopLevelType.map((type) => (
-            <div
-              key={type.name}
-              className={`
-                p-2 px-3 rounded-lg cursor-pointer border-2`}
-              onClick={() => setRwoForm({ ...rwoForm, category: type.name })}
-            >
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="font-semibold">{type.name}</p>
-                  <p className="text-sm text-gray-600">{type.description}</p>
-                </div>
-                <div>
-                  {rwoForm.category === type.name && (
-                    <div className="mt-2 h-5 w-5 rounded-full bg-black flex justify-between items-center">
-                      <div className="h-2 w-2 rounded-full bg-white mx-auto"></div>
-                    </div>
-                  )}
-                  {rwoForm.category !== type.name && (
-                    <div className="mt-2 h-5 w-5 rounded-full bg-transparent border-2 border-black"></div>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* category search */}
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold text-black">Category</h3>
-
-        <div className="mt-4">
-          <input
-            type="text"
-            placeholder="Search for category"
-            className="w-full p-2 rounded-lg border-2"
-            value={rwoForm.category}
-            onChange={(e) =>
-              setRwoForm({ ...rwoForm, category: e.target.value })
-            }
+      <Tabs.Root
+        defaultValue={selectedTab}
+        value={selectedTab}
+        onValueChange={(value) => setSelectedTab(value)}
+      >
+        <Tabs.Content value="basic_info">
+          <BasicInfo
+            natureOfObject={natureOfObject}
+            setNatureOfObject={setNatureOfObject}
+            primaryClass={primaryClass}
+            setPrimaryClass={setPrimaryClass}
+            category={category}
+            setCategory={setCategory}
+            title={title}
+            setTitle={setTitle}
+            objectDescription={objectDescription}
+            setObjectDescription={setObjectDescription}
+            setSelectedTab={setSelectedTab}
           />
-        </div>
-      </div>
+        </Tabs.Content>
 
-      {/* parent template */}
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold text-black">Parent Template</h3>
-
-        <div className="mt-4">
-          <input
-            type="text"
-            placeholder="Search for parent template"
-            className="w-full p-2 rounded-lg border-2"
-            value={rwoForm.parentTemplate}
-            onChange={(e) =>
-              setRwoForm({ ...rwoForm, parentTemplate: e.target.value })
-            }
+        <Tabs.Content value="fields">
+          <AddProperties
+            fields={fields}
+            setFields={setFields}
+            setSelectedTab={setSelectedTab}
           />
-        </div>
-      </div>
+        </Tabs.Content>
 
-      {/* title */}
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold text-black">Main Object Title</h3>
+        <Tabs.Content value="associations">
+          <AddAssociations setSelectedTab={setSelectedTab} />
+        </Tabs.Content>
 
-        <div className="mt-4">
-          <input
-            type="text"
-            placeholder="Enter title"
-            className="w-full p-2 rounded-lg border-2"
-            value={rwoForm.mainObjectTitle}
-            onChange={(e) =>
-              setRwoForm({ ...rwoForm, mainObjectTitle: e.target.value })
-            }
+        <Tabs.Content value="visuals">
+          <AddVisuals
+            icon={icon}
+            setIcon={setIcon}
+            image={image}
+            setImage={setImage}
+            setSelectedTab={setSelectedTab}
+            handleSubmission={handleSubmission}
           />
-        </div>
-      </div>
-
-      {/* description */}
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold text-black">Description</h3>
-
-        <div className="mt-4">
-          <textarea
-            placeholder="Enter description"
-            className="w-full p-2 rounded-lg border-2"
-            value={rwoForm.description}
-            onChange={(e) =>
-              setRwoForm({ ...rwoForm, description: e.target.value })
-            }
-          />
-        </div>
-      </div>
-
-      {/* next button */}
-      <div className="mt-6">
-        <button
-          className="bg-black text-white p-2 rounded-lg w-full"
-          onClick={handleNextClick}
-        >
-          Next
-        </button>
-      </div>
+        </Tabs.Content>
+      </Tabs.Root>
     </div>
   );
 };
 
 export default CreateRWO;
+

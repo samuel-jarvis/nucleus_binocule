@@ -6,7 +6,6 @@ import Signin from "./pages/auth/Signin";
 import AppLayout from "./pages/application/components/AppLayout";
 import Home from "./pages/application/Home";
 import CreateRWO from "./pages/application/create/CreateRWO";
-import AddProperties from "./pages/application/create/AddProperties";
 
 const App = () => {
   return (
@@ -31,7 +30,6 @@ const App = () => {
           <Route path="/" element={<AppLayout />}>
             <Route path="home" element={<Home />} />
             <Route path="create/rwo" element={<CreateRWO />} />
-            <Route path="create/rwo/add-properties" element={<AddProperties />} />
           </Route>
 
         </Routes>
