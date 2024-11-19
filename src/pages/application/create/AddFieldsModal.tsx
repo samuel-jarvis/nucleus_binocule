@@ -8,8 +8,8 @@ type IProperty = {
   value: string;
   type: string;
   label: string;
+  iconImage: File | null;
 };
-
 
 type Props = {
   fields: IProperty[];
@@ -18,6 +18,7 @@ type Props = {
       value: string;
       type: string;
       label: string;
+      iconImage?: File | null;
     }[]
   ) => void;
   updateField?: IProperty | null;
@@ -36,19 +37,25 @@ const FieldTypes = [
   // { value: "select", label: "Select" },
 ];
 
-const AddFieldsModal = ({fields, setFields, updateField, setSingleField }: Props) => {
+const AddFieldsModal = ({
+  fields,
+  setFields,
+  updateField,
+  setSingleField,
+}: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [value, setValue] = useState("");
   const [type, setType] = useState("text"); // input/form type
   const [label, setLabel] = useState("");
+  const [iconImage, setIconImage] = useState<File | null>(null);
 
   const [button, setButton] = useState("Add Field");
 
   useEffect(() => {
     if (!updateField) {
       return;
-    };
+    }
 
     if (updateField.value) {
       setValue(updateField.value);
@@ -58,26 +65,20 @@ const AddFieldsModal = ({fields, setFields, updateField, setSingleField }: Props
       setButton("Update Field");
       setIsModalOpen(true);
     }
-
   }, [updateField]);
 
   const handleAddField = () => {
-    if (!value) {
-      alert("Please enter value");
-      return;
-    }
-
     if (!label) {
       alert("Please enter label");
       return;
     }
-
     if (button === "Add Field") {
-      setFields([...fields, { value, type, label }]);
+      setFields([...fields, { value, type, label, iconImage: iconImage || null }]);
       // clear input fields
       setValue("");
-      setType("");
+      setType("text");
       setLabel("");
+      setIconImage(null);
     } else {
       if (!updateField) return;
 
@@ -184,6 +185,13 @@ const AddFieldsModal = ({fields, setFields, updateField, setSingleField }: Props
     }
   };
 
+  const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setIconImage(file);
+    }
+  };
+
   return (
     <div>
       <AlertDialog.Root
@@ -206,11 +214,11 @@ const AddFieldsModal = ({fields, setFields, updateField, setSingleField }: Props
         <AlertDialog.Content className="fixed top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2  rounded-lg shadow-lg w-full px-3 max-w-[700px]">
           <div className="bg-white p-8 rounded-lg">
             <div className="flex justify-between items-center">
-            <AlertDialog.Title asChild>
-              <h3 className="text-xl font-semibold text-black">
-                {button === "Add Field" ? "Add New Field" : "Update Field"}
-              </h3>
-            </AlertDialog.Title>
+              <AlertDialog.Title asChild>
+                <h3 className="text-xl font-semibold text-black">
+                  {button === "Add Field" ? "Add New Field" : "Update Field"}
+                </h3>
+              </AlertDialog.Title>
 
               <AlertDialog.Cancel asChild>
                 <FaTimes className="text-red-700" />
@@ -243,7 +251,7 @@ const AddFieldsModal = ({fields, setFields, updateField, setSingleField }: Props
               />
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 hidden">
               <label className="text-sm text-gray-600">Value</label>
 
               <div className="flex items-center gap-8">
@@ -257,6 +265,16 @@ const AddFieldsModal = ({fields, setFields, updateField, setSingleField }: Props
                   ></div>
                 )}
               </div>
+            </div>
+
+            <div className="mt-4">
+              <label className="text-sm text-gray-600">Icon</label>
+              <input
+                type="file"
+                // value={iconImage}
+                onChange={(e) => handleIconChange(e)}
+                className="w-full p-2 border-2 rounded-lg"
+              />
             </div>
 
             <div className="mt-4">

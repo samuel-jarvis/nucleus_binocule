@@ -1,3 +1,5 @@
+import FilterSearchInput from "../components/FilterSearchInput";
+
 type BasicInfoProps = {
   natureOfObject: string;
   setNatureOfObject: (value: string) => void;
@@ -10,6 +12,8 @@ type BasicInfoProps = {
   objectDescription: string;
   setObjectDescription: (value: string) => void;
   setSelectedTab: (value: string) => void;
+  parentObject: string;
+  setParentTemplate: (value: string) => void;
 };
 
 const TopLevelObject = ["Natural", "Artificial", "Hybrid"];
@@ -29,6 +33,18 @@ const TopLevelType = [
   },
 ];
 
+const categoryList = [
+  "Entertainment",
+  "Education",
+  "social",
+  "Government",
+  "transportation",
+  "commerce",
+  "health",
+  "real estate",
+  "environment"
+]
+
 const BasicInfo = ({
   natureOfObject,
   setNatureOfObject,
@@ -41,6 +57,8 @@ const BasicInfo = ({
   objectDescription,
   setObjectDescription,
   setSelectedTab,
+  parentObject,
+  setParentTemplate,
 }: BasicInfoProps) => {
   const handleNextClick = () => {
     if (!title) {
@@ -51,6 +69,10 @@ const BasicInfo = ({
     if (!objectDescription) {
       alert("Please enter description");
       return;
+    }
+
+    if (!parentObject) {
+      console.log("Please select parent object");
     }
 
     setSelectedTab("fields");
@@ -126,27 +148,34 @@ const BasicInfo = ({
         <h3 className="text-xl font-semibold text-black">Category</h3>
 
         <div className="mt-4">
-          <input
+          {/* <input
             type="text"
             placeholder="Search for category"
             className="w-full p-2 rounded-lg border-2"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-          />
+          /> */}
+
+          {/* select category */}
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full p-2 rounded-lg border-2"
+          >
+            {categoryList.map((_) => (
+              <option key={_} value={_}>{_}</option>
+            ))}
+          </select>
         </div>
       </div>
 
       {/* parent template */}
       <div className="mt-6">
-        <h3 className="text-xl font-semibold text-black">Parent Template</h3>
-
-        <div className="mt-4">
-          <input
-            type="text"
-            placeholder="Search for parent template"
-            className="w-full p-2 rounded-lg border-2"
-          />
-        </div>
+        <h3 className="text-xl font-semibold text-black">Parent Template
+          <span className="text-sm text-gray-400"> (Optional)</span>
+        </h3>
+        
+        <FilterSearchInput setPrimaryObject={setParentTemplate} />
       </div>
 
       {/* title */}
@@ -181,7 +210,7 @@ const BasicInfo = ({
       {/* next button */}
       <div className="mt-6">
         <button
-          className="bg-black text-white p-2 rounded-lg w-full"
+          className="bg-primary text-white p-2 rounded-lg w-full"
           onClick={handleNextClick}
         >
           Next

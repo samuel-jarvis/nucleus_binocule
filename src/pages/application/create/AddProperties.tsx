@@ -12,9 +12,10 @@ type Props = {
   fields: IProperty[];
   setFields: (fields: IProperty[]) => void;
   setSelectedTab: (value: string) => void;
+  context: 'rwo' | 'function';
 };
 
-const AddProperties = ({ fields, setFields, setSelectedTab }: Props) => {
+const AddProperties = ({ fields, setFields, setSelectedTab, context }: Props) => {
   const [singleField, setSingleField] = useState({} as IProperty | null);
 
   const handleUpdateField = (index: number) => {
@@ -26,6 +27,14 @@ const AddProperties = ({ fields, setFields, setSelectedTab }: Props) => {
     const newFields = fields.filter((_, i) => i !== index);
     setFields(newFields);
   };
+
+  const handleContinue = () => {
+    if (context === 'rwo') {
+      setSelectedTab("associations");
+    } else {
+      setSelectedTab("visuals");
+    }
+  }
 
   return (
     <div className="mb-18">
@@ -69,12 +78,12 @@ const AddProperties = ({ fields, setFields, setSelectedTab }: Props) => {
             fields.map((field, index) => (
               <div
                 key={index}
-                className="bg-[#f4f5f7] p-4 rounded-lg flex justify-between items-center mb-4"
+                className="bg-[#fafbfc] p-4 rounded-lg flex justify-between items-center mb-4"
                 onClick={() => handleUpdateField(index)}
               >
                 <div>
                   <h4 className="font-semibold">{field.label}</h4>
-                  <p className="text-sm text-gray-600">{field.value}</p>
+                  <p className="text-sm text-gray-600">Type: {field.type}</p>
                 </div>
 
                 <div>
@@ -92,7 +101,7 @@ const AddProperties = ({ fields, setFields, setSelectedTab }: Props) => {
 
       <div className="mt-6">
         <button
-          onClick={() => setSelectedTab("associations")}
+          onClick={() => handleContinue()}
           className="bg-primary text-white p-2 px-4 rounded-lg block w-full"
         >
           Continue

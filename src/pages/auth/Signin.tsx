@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FullLogo from "../../assets/logo/full_logo.png";
 import AuthApi from "../../api/authApi";
 import { useDispatch } from "react-redux";
-import { login } from "../../../reducers/authSlice";
+import { login } from "../../reducers/authSlice";
 
 const Signin = () => {
   const navigate = useNavigate();

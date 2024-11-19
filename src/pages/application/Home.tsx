@@ -1,8 +1,12 @@
 // import { useState } from "react";
-import HomeIllustration from "../../assets/illustrations/home_illustration.png";
+import HomeIllustration from "../../assets/illustrations/homeIllustration.png";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import SearchNucleus from "./components/SearchNucleus";
+
+import functionIcon from "../../assets/icons/function.png";
+import rwoIcon from "../../assets/icons/object.png"
+// import activityIcon from "../../assets/icons/activity.png";
 
 const Home = () => {
 
@@ -31,17 +35,17 @@ const Home = () => {
           <p className="text-black text-lg">Create New</p>
 
           <p>
-            <Link className="text-blue-500 underline" to="/create">
+            <Link className="text-blue-500 underline" to="#">
               Learn More
             </Link>
           </p>
         </div>
 
-        <div className="mt-4 flex justify-between items-center bg-[#f4f5f7] p-4 rounded-lg">
+        <div className="mt-4 flex justify-between items-center bg-[#F6F8FE] p-4 rounded-lg">
           <div className="flex items-center">
             <img
               className="w-10 h-10 mr-2 object-cover rounded-lg"
-              src="https://img.icons8.com/?size=256&id=43591&format=png"
+              src={rwoIcon}
               alt=""
             />
 
@@ -60,11 +64,11 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="mt-4 flex justify-between items-center bg-[#f3f3f2] p-4 rounded-lg">
+        <div className="mt-4 flex justify-between items-center bg-[#FEF6F6] p-4 rounded-lg">
           <div className="flex items-center">
             <img
-              className="w-10 h-10 mr-2 object-cover rounded-lg"
-              src="https://img.icons8.com/?size=256&id=43591&format=png"
+              className="w-12 h-12 mr-2 object-cover rounded-lg"
+              src={functionIcon}
               alt=""
             />
 
@@ -77,7 +81,7 @@ const Home = () => {
           </div>
 
           <div>
-            <Link to="/create/rwo">
+            <Link to="/create/functions-or-activities">
               <div className="bg-white p-2 rounded-lg">
                 <FaPlus className="text-2xl text-blue-500 cursor-pointer" />
               </div>

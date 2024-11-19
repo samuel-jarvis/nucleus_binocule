@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Tabs from "@radix-ui/react-tabs";
-import BasicInfo from "./BasicInfo";
+import BasicInfo from "./RWOBasicInfo";
 import AddProperties from "./AddProperties";
 import AddAssociations from "./AddAssociations";
 import AddVisuals from "./AddVisuals";
@@ -33,38 +33,63 @@ import { toast } from "react-toastify";
 
 const CreateRWO = () => {
   const navigate = useNavigate();
-  
+  const [isLoading, setIsLoading] = useState(false);
   const [natureOfObject, setNatureOfObject] = useState("natural");
   const [primaryClass, setPrimaryClass] = useState("static");
   const [category, setCategory] = useState("education");
   const [title, setTitle] = useState("");
   const [objectDescription, setObjectDescription] = useState("");
-  // const [parentObject, setParentObject] = useState([{ object: "" }]);
+  const [parentObject, setParentObject] = useState<any>();
 
   const [fields, setFields] = useState<any>([]);
 
-  // const [states, setStates] = useState([
-  //   { value: "", type: "text", label: "" },
-  // ]);
-
-  // visuals
   const [icon, setIcon] = useState("");
   const [image, setImage] = useState("");
 
   const [selectedTab, setSelectedTab] = useState("basic_info");
 
   const handleSubmission = () => {
-    const data = {
-      natureOfObject: 'natural',
-      primaryClass: 'static',
+    const data: any = {
+      natureOfObject: natureOfObject.toLowerCase(),
+      primaryClass: "static",
+      // parentObject: [
+      //   {
+      //     object: parentObject,
+      //   },
+      // ],
       category,
       title,
       objectDescription,
       fields,
-      icon: "https://img.freepik.com/free-photo/3d-black-gift-box-with-gold-ribbon-bow_107791-17735.jpg"
+      icon: "https://img.freepik.com/free-photo/3d-black-gift-box-with-gold-ribbon-bow_107791-17735.jpg",
     };
 
+    if (parentObject) {
+      data["parentObject"] = [
+        {
+          object: parentObject,
+        },
+      ];
+    }
+
     console.log(data);
+
+    // if (!parentObject) {
+    //   toast.error("Please select a parent object");
+    //   return;
+    // }
+
+    if (!title) {
+      toast.error("Please enter a title");
+      return;
+    }
+
+    if (!objectDescription) {
+      toast.error("Please enter a description");
+      return;
+    }
+
+    setIsLoading(true);
 
     NucleusApi.createNucleus(data)
       .then((res) => {
@@ -74,6 +99,10 @@ const CreateRWO = () => {
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Error creating RWO");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -97,6 +126,8 @@ const CreateRWO = () => {
             objectDescription={objectDescription}
             setObjectDescription={setObjectDescription}
             setSelectedTab={setSelectedTab}
+            parentObject={parentObject}
+            setParentTemplate={setParentObject}
           />
         </Tabs.Content>
 
@@ -105,6 +136,7 @@ const CreateRWO = () => {
             fields={fields}
             setFields={setFields}
             setSelectedTab={setSelectedTab}
+            context={"rwo"}
           />
         </Tabs.Content>
 
@@ -120,6 +152,7 @@ const CreateRWO = () => {
             setImage={setImage}
             setSelectedTab={setSelectedTab}
             handleSubmission={handleSubmission}
+            isLoading={isLoading}
           />
         </Tabs.Content>
       </Tabs.Root>
@@ -128,4 +161,3 @@ const CreateRWO = () => {
 };
 
 export default CreateRWO;
-

@@ -15,7 +15,8 @@ const SearchNucleus = () => {
     NucleusApi.searchNucleus(searchInput)
       .then((res) => {
         console.log(res);
-        setSearchResults(res);
+        setSearchResults(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -47,9 +48,9 @@ const SearchNucleus = () => {
             </div>
           )
         }
-        {searchResults.length > 0 && searchResults.map((result) => (
+        {!loading && searchResults.length > 0 && searchResults.map((result) => (
           <div
-            key={result.id}
+            key={result._id}
             className="mt-4 flex justify-between items-center bg-[#f4f5f7] p-4 rounded-lg"
           >
             <div className="flex items-center">
@@ -79,7 +80,8 @@ const SearchNucleus = () => {
             </div>
           </div>
         ))}
-        {searchResults.length === 0 && (
+
+        {!loading && searchResults.length === 0 && (
           <div className="mt-4 bg-[#f6f7f8] p-4 rounded-lg text-center">
             <p className="text-gray-600">No search results found</p>
           </div>

@@ -5,6 +5,7 @@ type Props = {
   setImage: (value: string) => void;
   setSelectedTab: (value: string) => void;
   handleSubmission: () => void;
+  isLoading: boolean;
 };
 
 const AddVisuals = ({
@@ -14,6 +15,7 @@ const AddVisuals = ({
   setImage,
   setSelectedTab,
   handleSubmission,
+  isLoading
 }: Props) => {
   const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -47,7 +49,7 @@ const AddVisuals = ({
 
       <div>
         <label className="block mt-4">
-          <span className="text-gray-700">Image</span>
+          <span className="text-gray-700">3d Image</span>
           <input
             type="file"
             accept="image/*"
@@ -63,8 +65,10 @@ const AddVisuals = ({
         <button
           onClick={() => handleSubmission()}
           className="bg-primary text-white p-2 px-4 rounded-lg block w-full"
+          disabled={isLoading}
         >
-          Create Application
+          {/* Create Application */}
+          {isLoading ? "Creating..." : "Create Application"}
         </button>
       </div>
 

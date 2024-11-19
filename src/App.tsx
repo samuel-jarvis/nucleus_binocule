@@ -6,6 +6,8 @@ import Signin from "./pages/auth/Signin";
 import AppLayout from "./pages/application/components/AppLayout";
 import Home from "./pages/application/Home";
 import CreateRWO from "./pages/application/create/CreateRWO";
+import CreateFunctionsOrActivities from "./pages/application/create/CreateFunctionsOrActivities";
+import Profile from "./pages/profile/Profile";
 
 const App = () => {
   return (
@@ -30,6 +32,8 @@ const App = () => {
           <Route path="/" element={<AppLayout />}>
             <Route path="home" element={<Home />} />
             <Route path="create/rwo" element={<CreateRWO />} />
+            <Route path="create/functions-or-activities" element={<CreateFunctionsOrActivities />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
 
         </Routes>
