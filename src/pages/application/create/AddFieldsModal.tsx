@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { useEffect, useState } from "react";
@@ -12,7 +13,7 @@ type IProperty = {
 };
 
 type Props = {
-  fields: IProperty[];
+  fields: IProperty[] | any;
   setFields: (
     fields: {
       value: string;
@@ -21,7 +22,7 @@ type Props = {
       iconImage?: File | null;
     }[]
   ) => void;
-  updateField?: IProperty | null;
+  updateField?: IProperty | any;
   setSingleField: (field: IProperty | null) => void;
 };
 
@@ -82,7 +83,7 @@ const AddFieldsModal = ({
     } else {
       if (!updateField) return;
 
-      const newFields = fields.map((f) => {
+      const newFields = fields.map((f: any) => {
         if (f.value === updateField.value) {
           return { value, type, label };
         }
