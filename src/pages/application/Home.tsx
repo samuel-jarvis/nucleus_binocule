@@ -6,6 +6,7 @@ import SearchNucleus from "./components/SearchNucleus";
 
 import functionIcon from "../../assets/icons/function.png";
 import rwoIcon from "../../assets/icons/object.png"
+import AllNucleus from "./components/AllNucleus";
 // import activityIcon from "../../assets/icons/activity.png";
 
 const Home = () => {
@@ -97,6 +98,10 @@ const Home = () => {
         </p>
 
         <SearchNucleus />
+      </div>
+
+      <div>
+        <AllNucleus />
       </div>
     </div>
   );

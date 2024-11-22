@@ -44,7 +44,7 @@ const Signin = () => {
       .catch((err) => {
         setLoading(false);
         console.log(err);
-        setError("Something went wrong. Please try again later.");
+        setError(err.response.data.msg || "Something went wrong. Please try again later.");
       });
   };
 
@@ -76,13 +76,13 @@ const Signin = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-10">
             <label className="hidden" htmlFor="email">
-              Email
+              Email / Byte Id
             </label>
             <input
               type="text"
               id="email"
               name="email"
-              placeholder="Username or email"
+              placeholder="Enter email or byteId"
               value={signinData.email}
               onChange={handleChange}
               className="w-full p-2 border-b-2 border-black"
