@@ -60,7 +60,11 @@ const AllNucleus = () => {
                 <div>
                   <h4 className="font-bold">{nucleus.title}</h4>
                   <p className="text-sm text-gray-600">
-                    {nucleus.objectDescription}
+                    {
+                      nucleus.objectDescription.length > 100
+                        ? nucleus.objectDescription.substring(0, 60) + "..."
+                        : nucleus.objectDescription
+                    }
                   </p>
                   <div className="text-sm text-gray-600">
                     Category: {nucleus.category}

@@ -19,11 +19,12 @@ type Props = {
       value: string;
       type: string;
       label: string;
+      example: string;
       iconImage?: File | null;
     }[]
   ) => void;
   updateField?: IProperty | any;
-  setSingleField: (field: IProperty | null) => void;
+  setSingleField: any;
 };
 
 const FieldTypes = [
@@ -49,6 +50,7 @@ const AddFieldsModal = ({
   const [value, setValue] = useState("");
   const [type, setType] = useState("text"); // input/form type
   const [label, setLabel] = useState("");
+  const [example, setExample] = useState("");
   const [iconImage, setIconImage] = useState<File | null>(null);
 
   const [button, setButton] = useState("Add Field");
@@ -74,11 +76,15 @@ const AddFieldsModal = ({
       return;
     }
     if (button === "Add Field") {
-      setFields([...fields, { value, type, label, iconImage: iconImage || null }]);
+      setFields([
+        ...fields,
+        { value, type, label, example, iconImage: iconImage || null },
+      ]);
       // clear input fields
       setValue("");
       setType("text");
       setLabel("");
+      setExample("");
       setIconImage(null);
     } else {
       if (!updateField) return;
@@ -98,6 +104,7 @@ const AddFieldsModal = ({
       setValue("");
       setType("");
       setLabel("");
+      setExample("");
     }
 
     setIsModalOpen(false);
@@ -241,7 +248,7 @@ const AddFieldsModal = ({
               </select>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-3">
               <label className="text-sm text-gray-600">Label</label>
               <input
                 type="text"
@@ -252,7 +259,18 @@ const AddFieldsModal = ({
               />
             </div>
 
-            <div className="mt-4 hidden">
+            <div className="mt-3">
+              <label className="text-sm text-gray-600">Example</label>
+              <input
+                type="text"
+                placeholder="Example"
+                value={example}
+                onChange={(e) => setExample(e.target.value)}
+                className="w-full p-2 border-2 rounded-lg"
+              />
+            </div>
+
+            <div className="mt-3 hidden">
               <label className="text-sm text-gray-600">Value</label>
 
               <div className="flex items-center gap-8">
@@ -268,7 +286,7 @@ const AddFieldsModal = ({
               </div>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-3">
               <label className="text-sm text-gray-600">Icon</label>
               <input
                 type="file"
@@ -278,7 +296,7 @@ const AddFieldsModal = ({
               />
             </div>
 
-            <div className="mt-4">
+            <div className="mt-3">
               <button
                 onClick={() => handleAddField()}
                 className="bg-primary text-white p-2 px-4 rounded-lg block w-full"

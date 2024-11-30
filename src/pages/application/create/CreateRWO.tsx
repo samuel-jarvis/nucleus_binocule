@@ -41,6 +41,8 @@ const CreateRWO = () => {
   const [objectDescription, setObjectDescription] = useState("");
   const [parentObject, setParentObject] = useState<any>();
 
+  const [mobilityType, setMobilityType] = useState("stationary");
+
   const [fields, setFields] = useState<any>([]);
 
   const [icon, setIcon] = useState("");
@@ -128,6 +130,8 @@ const CreateRWO = () => {
             setSelectedTab={setSelectedTab}
             parentObject={parentObject}
             setParentTemplate={setParentObject}
+            mobilityType={mobilityType}
+            setMobilityType={setMobilityType}
           />
         </Tabs.Content>
 

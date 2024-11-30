@@ -6,6 +6,7 @@ type IProperty = {
   value: string;
   type: string;
   label: string;
+  example: string;
 };
 
 type Props = {
@@ -84,6 +85,7 @@ const AddProperties = ({ fields, setFields, setSelectedTab, context }: Props) =>
                 <div>
                   <h4 className="font-semibold">{field.label}</h4>
                   <p className="text-sm text-gray-600">Type: {field.type}</p>
+                  <p className="text-sm text-gray-600">Example: {field.example}</p>
                 </div>
 
                 <div>

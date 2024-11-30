@@ -65,6 +65,7 @@ const FilterSearchInput = ({
         value={searchInput}
         // onChange={(e) => setSearchInput(e.target.value)}
         onChange={handleSearchInputChange}
+        placeholder="Search for a primary object"
       />
 
 

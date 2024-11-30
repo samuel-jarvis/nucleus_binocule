@@ -24,6 +24,12 @@ const SearchNucleus = () => {
       });
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  }
+
   return (
     <div>
       <div className="mt-4 flex items-center bg-[#f4f5f7] p-4 rounded-lg">
@@ -32,10 +38,11 @@ const SearchNucleus = () => {
           className="w-full bg-transparent outline-none"
           placeholder="Search templates..."
           value={searchInput}
+          onKeyPress={handleKeyPress}
           onChange={(e) => setSearchInput(e.target.value)}
         />
 
-        <div className="bg-whiterounded-lg" onClick={handleSearch}>
+        <div className="bg-white rounded-lg" onClick={handleSearch}>
           <IoIosSearch className="text-2xl text-gray-600 cursor-pointer" />
         </div>
       </div>

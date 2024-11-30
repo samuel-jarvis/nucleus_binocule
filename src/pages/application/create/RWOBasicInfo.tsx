@@ -1,4 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import FilterSearchInput from "../components/FilterSearchInput";
+import { useEffect } from "react";
 
 type BasicInfoProps = {
   natureOfObject: string;
@@ -14,6 +16,8 @@ type BasicInfoProps = {
   setSelectedTab: (value: string) => void;
   parentObject: string;
   setParentTemplate: (value: string) => void;
+  mobilityType: string;
+  setMobilityType: (value: string) => void;
 };
 
 const TopLevelObject = ["Natural", "Artificial", "Hybrid"];
@@ -36,14 +40,14 @@ const TopLevelType = [
 const categoryList = [
   "Entertainment",
   "Education",
-  "social",
+  "Social",
   "Government",
-  "transportation",
-  "commerce",
-  "health",
-  "real estate",
-  "environment"
-]
+  "Transportation",
+  "Commerce",
+  "Health",
+  "Real Estate",
+  "Environment",
+];
 
 const BasicInfo = ({
   natureOfObject,
@@ -59,6 +63,8 @@ const BasicInfo = ({
   setSelectedTab,
   parentObject,
   setParentTemplate,
+  mobilityType,
+  setMobilityType,
 }: BasicInfoProps) => {
   const handleNextClick = () => {
     if (!title) {
@@ -78,6 +84,12 @@ const BasicInfo = ({
     setSelectedTab("fields");
   };
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <div className="my-8">
@@ -90,7 +102,7 @@ const BasicInfo = ({
         </p>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 hidden">
         <h3 className="text-xl font-semibold text-black">Top Level Object</h3>
 
         <div className="grid grid-cols-3 gap-4 mt-4">
@@ -163,7 +175,9 @@ const BasicInfo = ({
             className="w-full p-2 rounded-lg border-2"
           >
             {categoryList.map((_) => (
-              <option key={_} value={_}>{_}</option>
+              <option key={_} value={_}>
+                {_}
+              </option>
             ))}
           </select>
         </div>
@@ -171,10 +185,11 @@ const BasicInfo = ({
 
       {/* parent template */}
       <div className="mt-6">
-        <h3 className="text-xl font-semibold text-black">Parent Template
+        <h3 className="text-xl font-semibold text-black">
+          Parent Template
           <span className="text-sm text-gray-400"> (Optional)</span>
         </h3>
-        
+
         <FilterSearchInput setPrimaryObject={setParentTemplate} />
       </div>
 
@@ -207,6 +222,23 @@ const BasicInfo = ({
         </div>
       </div>
 
+      {/* mobility type */}
+      <div className="mt-6">
+        <h3 className="text-xl font-semibold text-black">Mobility Type</h3>
+
+        <div className="mt-4">
+          <select
+            value={mobilityType}
+            onChange={(e) => setMobilityType(e.target.value)}
+            className="w-full p-2 rounded-lg border-2"
+          >
+            <option value="Static">Static</option>
+            <option value="Mobile">Mobile</option>
+            <option value="Semi-Mobile">Semi Mobile</option>
+          </select>
+        </div>
+      </div>
+
       {/* next button */}
       <div className="mt-6">
         <button
@@ -215,6 +247,15 @@ const BasicInfo = ({
         >
           Next
         </button>
+
+        <div className="mt-2">
+          <button
+            onClick={() => navigate("/home")}
+            className="bg-white text-black font-medium p-2 px-4 rounded-lg block w-full"
+          >
+            Back Home
+          </button>
+        </div>
       </div>
     </div>
   );
