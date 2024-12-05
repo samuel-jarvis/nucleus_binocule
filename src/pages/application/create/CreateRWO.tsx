@@ -67,19 +67,11 @@ const CreateRWO = () => {
     };
 
     if (parentObject) {
-      data["parentObject"] = [
-        {
-          object: parentObject,
-        },
-      ];
+      data.parentObject = parentObject;
     }
 
     console.log(data);
 
-    // if (!parentObject) {
-    //   toast.error("Please select a parent object");
-    //   return;
-    // }
 
     if (!title) {
       toast.error("Please enter a title");

@@ -174,6 +174,7 @@ const BasicInfo = ({
             onChange={(e) => setCategory(e.target.value)}
             className="w-full p-2 rounded-lg border-2"
           >
+            <option value="">Select category</option>
             {categoryList.map((_) => (
               <option key={_} value={_}>
                 {_}
