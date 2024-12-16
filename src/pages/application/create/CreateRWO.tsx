@@ -53,24 +53,21 @@ const CreateRWO = () => {
   const handleSubmission = () => {
     const data: any = {
       natureOfObject: natureOfObject.toLowerCase(),
-      primaryClass: "static",
-      // parentObject: [
-      //   {
-      //     object: parentObject,
-      //   },
-      // ],
+      // primaryClass: primaryClass.toLowerCase(),
+      primaryClass: 'static',
+      parentObject,
       category,
       title,
       objectDescription,
       fields,
-      icon: "https://img.freepik.com/free-photo/3d-black-gift-box-with-gold-ribbon-bow_107791-17735.jpg",
+      icon,
     };
 
     if (parentObject) {
       data.parentObject = parentObject;
     }
 
-    console.log(data);
+    console.log(data); 
 
 
     if (!title) {

@@ -4,12 +4,14 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
+import FileUploadApiApi from "../../../api/fileUploadApi";
+import { toast } from "react-toastify";
 
 type IProperty = {
   value: string;
   type: string;
   label: string;
-  iconImage: File | null;
+  iconImage: string;
 };
 
 type Props = {
@@ -20,7 +22,7 @@ type Props = {
       type: string;
       label: string;
       example: string;
-      iconImage?: File | null;
+      iconImage?: string;
     }[]
   ) => void;
   updateField?: IProperty | any;
@@ -45,13 +47,15 @@ const AddFieldsModal = ({
   updateField,
   setSingleField,
 }: Props) => {
+  const [uploadingFile, setUploadingFile] = useState(false)
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [value, setValue] = useState("");
   const [type, setType] = useState("text"); // input/form type
   const [label, setLabel] = useState("");
   const [example, setExample] = useState("");
-  const [iconImage, setIconImage] = useState<File | null>(null);
+  const [iconImage, setIconImage] = useState("");
 
   const [button, setButton] = useState("Add Field");
 
@@ -75,6 +79,12 @@ const AddFieldsModal = ({
       alert("Please enter label");
       return;
     }
+
+    if (uploadingFile) {
+      toast.info('Uploading icon')
+      return
+    }
+
     if (button === "Add Field") {
       setFields([
         ...fields,
@@ -85,7 +95,7 @@ const AddFieldsModal = ({
       setType("text");
       setLabel("");
       setExample("");
-      setIconImage(null);
+      setIconImage("");
     } else {
       if (!updateField) return;
 
@@ -196,7 +206,19 @@ const AddFieldsModal = ({
   const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setIconImage(file);
+      setUploadingFile(true)
+      FileUploadApiApi.upload(file)
+        .then((res) => {
+          console.log(res);
+          setIconImage(res.url);
+          toast.success("Icon uploaded successfully");
+          setUploadingFile(false)
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Icon upload failed");
+          setUploadingFile(false)
+        });
     }
   };
 
