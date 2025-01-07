@@ -1,7 +1,7 @@
 // configure axios for api calls
 import axios from "axios";
 
-const API_URL_RAW = "https://spaceweb.io";
+export const API_URL_RAW = "https://spaceweb.io";
 
 const api = axios.create({
   baseURL: `${API_URL_RAW}/api/v1`,

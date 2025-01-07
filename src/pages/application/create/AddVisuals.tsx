@@ -31,6 +31,11 @@ const AddVisuals = ({
 
     console.log(icon, image)
 
+    if (!icon) {
+      toast.error("Please upload an icon");
+      return;
+    }
+
     handleSubmission()
   }
   

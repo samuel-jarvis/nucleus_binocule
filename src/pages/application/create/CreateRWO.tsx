@@ -9,28 +9,6 @@ import AddVisuals from "./AddVisuals";
 import { NucleusApi } from "../../../api/nucleusApi";
 import { toast } from "react-toastify";
 
-// type RwoForm = {
-//   natureOfObject: "natural";
-//   primaryClass: "static";
-//   category: "education";
-//   title: string;
-//   parentObject: {
-//     object: string;
-//   }[];
-//   objectDescription: string;
-//   fields: {
-//     value: string;
-//     type: "text";
-//     label: string;
-//   }[];
-//   states: {
-//     value: string;
-//     type: "text";
-//     label: string;
-//   }[];
-//   icon: string;
-// };
-
 const CreateRWO = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -61,6 +39,7 @@ const CreateRWO = () => {
       objectDescription,
       fields,
       icon,
+      mobilityType,
     };
 
     if (parentObject) {

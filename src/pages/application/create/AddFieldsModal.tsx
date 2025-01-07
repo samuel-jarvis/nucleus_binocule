@@ -88,7 +88,7 @@ const AddFieldsModal = ({
     if (button === "Add Field") {
       setFields([
         ...fields,
-        { value, type, label, example, iconImage: iconImage || null },
+        { value, type, label, example, icon: iconImage || null },
       ]);
       // clear input fields
       setValue("");
@@ -210,7 +210,7 @@ const AddFieldsModal = ({
       FileUploadApiApi.upload(file)
         .then((res) => {
           console.log(res);
-          setIconImage(res.url);
+          setIconImage(res.data.url);
           toast.success("Icon uploaded successfully");
           setUploadingFile(false)
         })
@@ -312,6 +312,7 @@ const AddFieldsModal = ({
               <label className="text-sm text-gray-600">Icon</label>
               <input
                 type="file"
+                accept="image/*"
                 // value={iconImage}
                 onChange={(e) => handleIconChange(e)}
                 className="w-full p-2 border-2 rounded-lg"

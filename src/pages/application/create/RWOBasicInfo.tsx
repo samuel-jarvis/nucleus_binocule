@@ -38,16 +38,21 @@ const TopLevelType = [
 ];
 
 const categoryList = [
-  "Entertainment",
-  "Education",
-  "Social",
-  "Government",
-  "Transportation",
-  "Commerce",
-  "Health",
-  "Real Estate",
-  "Environment",
-];
+    "Buildings",
+    "Vehicles",
+    "Trees",
+    "Rivers",
+    "Mountains",
+    "Bridges",
+    "Roads",
+    "Boats",
+    "Plants (External)", 
+    "Animals (External)",
+    "Human Activities",
+    "Statues",
+    "Monuments",
+    "Others"
+  ];
 
 const BasicInfo = ({
   natureOfObject,
@@ -233,6 +238,7 @@ const BasicInfo = ({
             onChange={(e) => setMobilityType(e.target.value)}
             className="w-full p-2 rounded-lg border-2"
           >
+            <option value="">Select mobility type</option>
             <option value="Static">Static</option>
             <option value="Mobile">Mobile</option>
             <option value="Semi-Mobile">Semi Mobile</option>

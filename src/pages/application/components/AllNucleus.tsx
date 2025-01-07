@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { NucleusApi } from "../../../api/nucleusApi";
+// import { renderServerImage } from "../../../utility";
 
 interface ObjectData {
   category: string;
@@ -24,7 +25,10 @@ const AllNucleus = () => {
     NucleusApi.getNucleus()
       .then((res) => {
         console.log(res);
-        setData(res.data);
+        // setData(res.data);
+
+        // reverse and select the last 10
+        setData(res.data.reverse().slice(0, 10));
         setLoading(false);
       })
       .catch((err) => {
@@ -44,7 +48,7 @@ const AllNucleus = () => {
 
   return (
     <div>
-      <h3 className="text-xl font-semibold text-black mt-8">All Nucleus</h3>
+      <h3 className="text-xl font-semibold text-black mt-8">Recently Created</h3>
 
       <div className="mt-4">
         <div className="grid grid-cols-2 gap-4">
@@ -53,9 +57,15 @@ const AllNucleus = () => {
               <div className="flex items-center">
                 <img
                   className="w-10 h-10 mr-2 object-cover rounded-lg"
-                  src={nucleus.icon}
+                  src={nucleus?.icon}
                   alt=""
                 />
+
+                <div className="hidden">
+                  {
+                    nucleus?.icon
+                  }
+                </div>
 
                 <div>
                   <h4 className="font-bold">{nucleus.title}</h4>

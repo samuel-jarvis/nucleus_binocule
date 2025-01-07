@@ -56,7 +56,7 @@ const AddAssociations = ({ setSelectedTab }: Props) => {
 
       <div className="mt-6">
         <button
-          onClick={() => setSelectedTab("basic_info")}
+          onClick={() => setSelectedTab("fields")}
           className="bg-white text-primary p-2 px-4 rounded-lg block w-full"
         >
           Back
