@@ -4,12 +4,15 @@ import FullLogo from "../../assets/logo/full_logo.png";
 import AuthApi from "../../api/authApi";
 import { useDispatch } from "react-redux";
 import { login } from "../../reducers/authSlice";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 
 const Signin = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const [signinData, setSigninData] = useState({
     email: "",
@@ -34,8 +37,8 @@ const Signin = () => {
         setLoading(false);
         console.log(res);
         const payload = {
-          token: res.data.token,
-          user: res.data,
+          token: res.token,
+          user: res.user,
         };
         
         dispatch(login(payload))
@@ -94,16 +97,21 @@ const Signin = () => {
             <label className="hidden" htmlFor="password">
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Enter password"
-              value={signinData.password}
-              onChange={handleChange}
-              className="w-full p-2 border-b-2 border-black"
-              required
-            />
+            <div className="flex justify-between items-center">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                placeholder="Enter password"
+                value={signinData.password}
+                onChange={handleChange}
+                className="w-full p-2 border-b-2 border-black"
+                required
+              />
+              <div onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+              </div>
+            </div>
           </div>
 
           {/* forgot password */}

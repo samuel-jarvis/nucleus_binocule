@@ -1,14 +1,14 @@
 // configure axios for api calls
 import axios from "axios";
 
-export const API_URL_RAW = "https://spaceweb.io";
+// export const API_URL_RAW = "https://spaceweb.io";
+export const API_URL_RAW = import.meta.env.VITE_APP_API_URL_RAW || "https://binoculebackend-production.up.railway.app"
 
 const api = axios.create({
   baseURL: `${API_URL_RAW}/api/v1`,
 });
 
 // api.defaults.withCredentials = true;
-
 
 // add token to request header
 api.interceptors.request.use(

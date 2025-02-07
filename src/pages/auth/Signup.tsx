@@ -16,10 +16,7 @@ const Signup = () => {
     firstName: "",
     lastName: "",
     phoneNumber: "",
-    address: "",
     country: "",
-    dob: "",
-    photo: "https://avatar.iran.liara.run/public/boy?username=Ash",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,13 +41,13 @@ const Signup = () => {
       .catch((err) => {
         setLoading(false);
         console.log(err);
-        setError(err.response.data.msg || "Something went wrong. Please try again later.");
+        setError(err.response.data.message || "Something went wrong. Please try again later.");
       });
   };
 
   return (
     <div>
-      <div className="p-4 px-8 max-w-[500px] mx-auto mt-20 rounded-lg shadow mb-20">
+      <div className="p-4 px-8 max-w-[500px] mx-auto mt-16 rounded-lg shadow mb-20">
         <div className="text-center">
           <img src={FullLogo} alt="Logo" className="h-20 mx-auto" />
         </div>
@@ -72,7 +69,7 @@ const Signup = () => {
         )}
 
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1">
             <div className="mb-4">
               <label
                 htmlFor="firstName"
@@ -140,6 +137,7 @@ const Signup = () => {
                 onChange={handleChange}
                 value={signupData.password}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                minLength={6}
               />
               <span
                 className="absolute right-2 top-2 cursor-pointer"
@@ -170,23 +168,6 @@ const Signup = () => {
 
           <div className="mb-4">
             <label
-              htmlFor="address"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Address
-            </label>
-            <input
-              type="text"
-              name="address"
-              id="address"
-              onChange={handleChange}
-              value={signupData.address}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
               htmlFor="country"
               className="block text-sm font-medium text-gray-700"
             >
@@ -198,23 +179,6 @@ const Signup = () => {
               id="country"
               onChange={handleChange}
               value={signupData.country}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="dob"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Date of Birth
-            </label>
-            <input
-              type="text"
-              name="dob"
-              id="dob"
-              onChange={handleChange}
-              value={signupData.dob}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>

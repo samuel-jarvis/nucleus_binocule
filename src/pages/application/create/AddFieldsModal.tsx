@@ -231,7 +231,7 @@ const AddFieldsModal = ({
         }}
       >
         <AlertDialog.Trigger asChild>
-          <button className="bg-primary text-white p-2 px-4 rounded-lg">
+          <button className="bg-blue text-white p-2 px-4 rounded-full">
             <p className="flex items-center gap-2">
               <FaPlus />
               Add Field

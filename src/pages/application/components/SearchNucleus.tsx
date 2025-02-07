@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { NucleusApi } from "../../../api/nucleusApi";
+import { useNavigate } from "react-router-dom";
 
 const SearchNucleus = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -11,11 +13,18 @@ const SearchNucleus = () => {
   const handleSearch = () => {
     console.log(searchInput);
 
+    if (!searchInput.trim()) {
+      setSearchResults([]);
+      return;
+    }
+
     setLoading(true);
-    NucleusApi.searchNucleus(searchInput)
+    NucleusApi.getNucleus({
+      query: searchInput,
+    })
       .then((res) => {
         console.log(res);
-        setSearchResults(res.data);
+        setSearchResults(res.docs);
         setLoading(false);
       })
       .catch((err) => {
@@ -29,6 +38,11 @@ const SearchNucleus = () => {
       handleSearch();
     }
   }
+
+  const navigate = useNavigate();
+  const handleClick = (id: string) => {
+    navigate(`/object/${id}`);
+  };
 
   return (
     <div>
@@ -58,12 +72,13 @@ const SearchNucleus = () => {
         {!loading && searchResults.length > 0 && searchResults.map((result) => (
           <div
             key={result._id}
-            className="mt-4 flex justify-between items-center bg-[#f4f5f7] p-4 rounded-lg"
+            className="mt-4 flex justify-between items-center bg-[#f4f5f7] p-4 rounded-lg cursor-pointer"
+            onClick={() => handleClick(result._id)}
           >
             <div className="flex items-center">
               <img
                 className="w-10 h-10 mr-2 object-cover rounded-lg"
-                src="https://img.icons8.com/?size=256&id=43591&format=png"
+                src={result.icon.url}
                 alt=""
               />
 

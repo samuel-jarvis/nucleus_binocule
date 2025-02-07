@@ -1,37 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
-import AddProperties from "./AddProperties";
 import AddAssociations from "./AddAssociations";
-import AddVisuals from "./AddVisuals";
 import FunctionBasicInfo from "./FunctionBasicInfo";
 import ApplicationApi from "../../../api/applicationApi";
 import ActivityApi from "../../../api/activityApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-// {
-//     "title": "title",
-//     "category": "education",
-//     "description": "this is a sample description",
-//     "primaryObject": "object123",
-//     "secondaryObject": ["object123"],
-//     "fields": [
-//         {
-//             "value": "plate",
-//             "type": "text",
-//             "label": "plate"
-//         }
-//     ],
-//     "states": [
-//         {
-//             "value": "open",
-//             "type": "text",
-//             "label": "availability"
-//         }
-//     ],
-//     "icon": "http/icon_url"
-// }
 
 const CreateFunctionsOrActivities = () => {
   const navigate = useNavigate();
@@ -47,13 +23,14 @@ const CreateFunctionsOrActivities = () => {
   const [secondaryObject] = useState([]);
   const [states] = useState([]);
 
-  const [fields, setFields] = useState<any>([]);
-  const [icon, setIcon] = useState("");
+  const [fields] = useState<any>([]);
+  const [icon] = useState("");
 
   const [selectedTab, setSelectedTab] = useState("basic_info");
-  const [image, setImage] = useState("");
+  // const [image, setImage] = useState("");
 
   const handleSubmission = () => {
+    console.log(isLoading);
     const data = {
       title,
       category,
@@ -120,12 +97,12 @@ const CreateFunctionsOrActivities = () => {
         </Tabs.Content>
 
         <Tabs.Content value="fields">
-          <AddProperties
+          {/* <AddProperties
             fields={fields}
             setFields={setFields}
             setSelectedTab={setSelectedTab}
             context={"rwo"}
-          />
+          /> */}
         </Tabs.Content>
 
         <Tabs.Content value="associations">
@@ -133,7 +110,7 @@ const CreateFunctionsOrActivities = () => {
         </Tabs.Content>
 
         <Tabs.Content value="visuals">
-          <AddVisuals
+          {/* <AddVisuals
             icon={icon}
             setIcon={setIcon}
             image={image}
@@ -141,8 +118,17 @@ const CreateFunctionsOrActivities = () => {
             setSelectedTab={setSelectedTab}
             handleSubmission={handleSubmission}
             isLoading={isLoading}
-          />
+          /> */}
         </Tabs.Content>
+
+        <div>
+          <button
+            onClick={handleSubmission}
+            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+          >
+            Submit
+          </button>
+        </div>
       </Tabs.Root>
     </div>
   );

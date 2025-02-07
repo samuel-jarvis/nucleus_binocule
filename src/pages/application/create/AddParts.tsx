@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMinus } from "react-icons/fa6";
 import AddFieldsModal from "./AddFieldsModal";
 import { IRealWorldObject } from "../CreateRWO";
@@ -18,27 +17,30 @@ type Props = {
   setSelectedTab: (value: string) => void;
 };
 
-const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: Props) => {
+const AddParts = ({ realWorldObject, setRealWorldObject, setSelectedTab }: Props) => {
   const [singleField, setSingleField] = useState({} as IProperty | null);
 
   const handleContinue = () => {
+    // if (context === 'rwo') {
+    //   setSelectedTab("associations");
+    // } else {
+    //   setSelectedTab("visuals");
+    // }
     console.log(realWorldObject);
-    setSelectedTab("parts");
+    setSelectedTab("associations");
   }
 
-  const handleRemoveField = (index?: number) => {
-    if (!realWorldObject.attributes) return;
-
-    const newFields = fields.filter((_: any, i: number) => i !== index);
+  const handleRemoveField = (index: number) => {
+    const newFields = fields.filter((_, i) => i !== index);
     setFields(newFields);
   };
 
-  const [fields, setFields] = useState(realWorldObject.attributes);
+  const [fields, setFields] = useState(realWorldObject.parts || []);
 
   useEffect(() => {
     setRealWorldObject({
       ...realWorldObject,
-      attributes: fields,
+      parts: fields,
     });
   }, [fields]);
 
@@ -68,7 +70,7 @@ const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: 
 
       <div className="mt-6">
         <div className="flex  justify-between items-center">
-          <h3 className="text-xl font-semibold text-black">Attributes</h3>
+          <h3 className="text-xl font-semibold text-black">Parts</h3>
 
           <AddFieldsModal
             fields={fields}
@@ -80,11 +82,11 @@ const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: 
 
         <div className="mt-4">
           {fields?.length > 0 &&
-            fields.map((field: { label: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; type: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; example: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }, index: Key | null | undefined) => (
+            fields.map((field, index) => (
               <div
                 key={index}
                 className="bg-[#fafbfc] p-4 rounded-lg flex justify-between items-center mb-4"
-              // onClick={() => handleUpdateField(index)}
+                // onClick={() => handleUpdateField(index)}
               >
                 <div>
                   <h4 className="font-semibold">{field.label}</h4>
@@ -94,7 +96,7 @@ const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: 
 
                 <div>
                   <button
-                    onClick={() => handleRemoveField(index as number)}
+                    onClick={() => handleRemoveField(index)}
                     className="bg-white text-red-700 p-2 rounded-lg"
                   >
                     <FaMinus />
@@ -116,7 +118,7 @@ const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: 
 
       <div className="mt-6">
         <button
-          onClick={() => setSelectedTab("basic_info")}
+          onClick={() => setSelectedTab("attributes")}
           className="bg-white text-primary p-2 px-4 rounded-lg block w-full"
         >
           Back
@@ -126,4 +128,4 @@ const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: 
   );
 };
 
-export default AddProperties;
+export default AddParts;

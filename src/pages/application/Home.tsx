@@ -2,7 +2,6 @@
 import HomeIllustration from "../../assets/illustrations/homeIllustration.png";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
-import SearchNucleus from "./components/SearchNucleus";
 
 import functionIcon from "../../assets/icons/function.png";
 import rwoIcon from "../../assets/icons/object.png"
@@ -12,7 +11,7 @@ import AllNucleus from "./components/AllNucleus";
 const Home = () => {
 
   return (
-    <div className="px-4">
+    <div className="px-4 mb-10">
       <div className="mt-8">
         <h2 className="text-2xl font-semibold text-gray-600 text-center">
           A spatial web profile template for real world objects.
@@ -91,16 +90,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div>
-        <h2 className="text-xl font-medium text-black mt-8">Search Existing</h2>
-        <p className="text-gray-600 text-sm">
-          Search for existing spatial templates by title or description
-        </p>
-
-        <SearchNucleus />
-      </div>
-
-      <div>
+      <div className="mt-8">
         <AllNucleus />
       </div>
     </div>

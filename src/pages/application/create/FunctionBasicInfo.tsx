@@ -1,5 +1,5 @@
 import { FaCircle, FaRegCircle } from "react-icons/fa6";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import FilterSearchInput from "../components/FilterSearchInput";
 
 type FunctionBasicInfoProps = {
@@ -39,21 +39,20 @@ const FunctionBasicInfo = ({
   setCategory,
   description,
   setDescription,
-  primaryObject,
   setPrimaryObject,
-  setSelectedTab,
 }: FunctionBasicInfoProps) => {
-  const handleNextClick = () => {
-    if (!title || !category || !description || !primaryObject) {
-      toast.error("Please fill all the fields");
-      return;
-    }
 
-    setSelectedTab("fields");
+  const handleNextClick = () => {
+    // if (!title || !category || !description || !primaryObject) {
+    //   toast.error("Please fill all the fields");
+    //   return;
+    // }
+
+    // setSelectedTab("fields");
   };
 
   return (
-    <div>
+    <div className="px-4">
       <h1 className="text-2xl font-semibold text-black">
         Create {type.toLocaleUpperCase()} for Real World Objects
       </h1>
@@ -135,7 +134,7 @@ const FunctionBasicInfo = ({
         <div className="mt-6">
           <button
             className="bg-primary text-white p-2 rounded-lg w-full"
-            onClick={handleNextClick}
+            onClick={() => handleNextClick()}
           >
             Next
           </button>

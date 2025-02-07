@@ -18,8 +18,15 @@ const FilterSearchInput = ({
   const handleSearch = () => {
     console.log(searchInput);
 
+    if (searchInput === "" || searchInput === null || searchInput === undefined) {
+      setSearchResults([]);
+      return;
+    }
+
     setLoading(true);
-    NucleusApi.searchNucleus(searchInput)
+    NucleusApi.getNucleus({
+      query: searchInput,
+    })
       .then((res) => {
         console.log(res);
         setSearchResults(res.data);

@@ -5,9 +5,12 @@ import Signup from "./pages/auth/Signup";
 import Signin from "./pages/auth/Signin";
 import AppLayout from "./pages/application/components/AppLayout";
 import Home from "./pages/application/Home";
-import CreateRWO from "./pages/application/create/CreateRWO";
+import CreateRWO from "./pages/application/CreateRWO";
 import CreateFunctionsOrActivities from "./pages/application/create/CreateFunctionsOrActivities";
 import Profile from "./pages/profile/Profile";
+import './App.css'
+import NucleusDetails from "./pages/application/NucleusDetails";
+import NucleusList from "./pages/application/NucleusList";
 
 const App = () => {
   return (
@@ -32,6 +35,8 @@ const App = () => {
           <Route path="/" element={<AppLayout />}>
             <Route path="home" element={<Home />} />
             <Route path="create/rwo" element={<CreateRWO />} />
+            <Route path="objects" element={<NucleusList />} />
+            <Route path="object/:id" element={<NucleusDetails />} />
             <Route path="create/functions-or-activities" element={<CreateFunctionsOrActivities />} />
             <Route path="profile" element={<Profile />} />
           </Route>
