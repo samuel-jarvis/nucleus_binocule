@@ -47,7 +47,7 @@ const Signin = () => {
       .catch((err) => {
         setLoading(false);
         console.log(err);
-        setError(err.response.data.msg || "Something went wrong. Please try again later.");
+        setError(err.response.data.message || "Something went wrong. Please try again later.");
       });
   };
 
