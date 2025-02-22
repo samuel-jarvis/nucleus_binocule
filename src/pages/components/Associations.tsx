@@ -78,7 +78,7 @@ const Associations = ({ realWorldObject, setRealWorldObject, setSelectedTab }: A
     <div className="p-4">
       <div className='mb-8'>
         <h2 className="text-2xl font-semibold text-gray-800">
-          <span className="text-blue mr-1">
+          <span className="mr-1 text-blue">
             + Add
           </span>
           Associations
@@ -91,7 +91,7 @@ const Associations = ({ realWorldObject, setRealWorldObject, setSelectedTab }: A
       <div className="space-y-4">
         {AssociationsList.map((association) => (
           <div key={association.key} className="rounded-lg shadow-sm">
-            <h3 className="text-xl font-semibold mb-2">{association.label}</h3>
+            <h3 className="mb-2 text-xl font-semibold">{association.label}</h3>
             <div>
               <div
                 className="flex items-center justify-between bg-[#F9F9F9] pr-2 rounded-lg"
@@ -105,26 +105,25 @@ const Associations = ({ realWorldObject, setRealWorldObject, setSelectedTab }: A
                       e.currentTarget.value = "";
                     }
                   }}
-                  className="input border-none p-2 w-full bg-transparent outline-none"
+                  className="p-2 w-full bg-transparent border-none outline-none input"
                 />
 
                 <FaCirclePlus
                   onClick={() => {
-                    const value = (document.getElementById(association.key) as HTMLInputElement).value;
-                    handleAddAssociation(association.key as keyof Associations, value);
-                  }
-                  }
-                  className="text-blue cursor-pointer"
+                    const input = document.querySelector(`input[placeholder="${association.placeholder}"]`) as HTMLInputElement;
+                    handleAddAssociation(association.key as keyof Associations, input.value);
+                  }}
+                  className="cursor-pointer text-blue"
                 />
               </div>
 
-              <div className="flex flex-wrap mt-2 gap-2">
+              <div className="flex flex-wrap gap-2 mt-2">
                 {realWorldObject.associations[association.key as keyof Associations].map((value) => (
-                  <div key={value} className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                    <span className='text-gray-800 mr-2'>{value}</span>
+                  <div key={value} className="flex justify-between items-center p-2 bg-gray-100 rounded">
+                    <span className='mr-2 text-gray-800'>{value}</span>
                     <FaCircleMinus
                       onClick={() => handleRemoveAssociation(association.key as keyof Associations, value)}
-                      className="text-red-500 hover:text-red-700 cursor-pointer"
+                      className="text-red-500 cursor-pointer hover:text-red-700"
                     />
                   </div>
                 ))}
@@ -138,7 +137,7 @@ const Associations = ({ realWorldObject, setRealWorldObject, setSelectedTab }: A
         <div className="mt-6">
           <button
             onClick={() => handleContinue()}
-            className="bg-primary text-white p-2 px-4 rounded-lg block w-full"
+            className="block p-2 px-4 w-full text-white rounded-lg bg-primary"
           >
             Continue
           </button>
@@ -147,7 +146,7 @@ const Associations = ({ realWorldObject, setRealWorldObject, setSelectedTab }: A
         <div className="mt-6">
           <button
             onClick={() => setSelectedTab("parts")}
-            className="bg-white text-primary p-2 px-4 rounded-lg block w-full"
+            className="block p-2 px-4 w-full bg-white rounded-lg text-primary"
           >
             Back
           </button>
