@@ -6,3 +6,10 @@ export const renderServerImage = (location: string) => {
   // otherwise, return the full path
   return (`${API_URL_RAW}${location}`);
 }
+
+export const textShortener = (text: string, maxLength: number) => {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + '...';
+  }
+  return text;
+};

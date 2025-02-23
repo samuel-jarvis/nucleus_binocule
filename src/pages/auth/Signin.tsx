@@ -55,20 +55,20 @@ const Signin = () => {
     <div>
       <div className="p-4 px-8 max-w-[500px] mx-auto mt-20 rounded-lg shadow mb-20">
         <div className="text-center">
-          <img src={FullLogo} alt="Logo" className="h-20 mx-auto" />
+          <img src={FullLogo} alt="Logo" className="mx-auto h-20" />
         </div>
 
-        <h1 className="text-2xl font-semibold mb-6 mt-10">
+        <h1 className="mt-10 mb-6 text-2xl font-semibold">
           Login with your ByteId
         </h1>
 
-        {/* <p className="text-center text-sm text-gray-700 mb-10">
+        {/* <p className="mb-10 text-sm text-center text-gray-700">
           Login with your ByteId to continue
         </p> */}
 
         {error && (
           <div
-            className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4"
+            className="p-4 mb-4 text-red-700 bg-red-100 border-l-4 border-red-500"
             role="alert"
             onClick={() => setError("")}
           >
@@ -88,7 +88,7 @@ const Signin = () => {
               placeholder="Enter email or byteId"
               value={signinData.email}
               onChange={handleChange}
-              className="w-full p-2 border-b-2 border-black"
+              className="p-2 w-full border-b-2 border-black"
               required
             />
           </div>
@@ -105,7 +105,7 @@ const Signin = () => {
                 placeholder="Enter password"
                 value={signinData.password}
                 onChange={handleChange}
-                className="w-full p-2 border-b-2 border-black"
+                className="p-2 w-full border-b-2 border-black"
                 required
               />
               <div onClick={() => setShowPassword(!showPassword)}>
@@ -117,13 +117,13 @@ const Signin = () => {
           {/* forgot password */}
           <Link
             to="/community/forgot-password"
-            className="block text-primary text-sm underline"
+            className="block text-sm underline text-primary"
           >
             Forgot password?
           </Link>
 
           <button
-            className="w-full bg-black text-white p-2 rounded-full mt-10 font-bold"
+            className="p-2 mt-10 w-full font-bold text-white bg-black rounded-full"
             type="submit"
             disabled={loading}
           >

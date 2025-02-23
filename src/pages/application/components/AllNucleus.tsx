@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { NucleusApi } from "../../../api/nucleusApi";
 import { IRealWorldObject } from "../CreateRWO";
 import { Link, useNavigate } from "react-router-dom";
+import { textShortener } from "../../../utility";
 
 export interface IRealWorldObjectResponse extends IRealWorldObject {
   user: any;
@@ -37,7 +38,7 @@ const AllNucleus = () => {
 
   if (loading) {
     return <p
-      className="text-black font-medium text-center my-8">Loading Nucleus</p>;
+      className="my-8 font-medium text-center text-black">Loading Nucleus</p>;
   }
 
   const handleClick = (id: string) => {
@@ -46,11 +47,11 @@ const AllNucleus = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex justify-between items-center">
         <h3 className="text-xl font-semibold text-black">Recently Created</h3>
 
         <button>
-          <Link to="/objects" className="text-blue-500 ml-auto mt-8 font-medium">
+          <Link to="/objects" className="mt-8 ml-auto font-medium text-blue-500">
           View All Templates
           </Link>
         </button>
@@ -59,12 +60,12 @@ const AllNucleus = () => {
       <div className="mt-4">
         <div className="grid grid-cols-2 gap-4">
           {data.map((nucleus) => (
-            <div key={nucleus._id} className="bg-slate-50 p-4 rounded-lg cursor-pointer"
+            <div key={nucleus._id} className="p-4 rounded-lg cursor-pointer bg-slate-50"
               onClick={() => handleClick(nucleus._id)}
             >
               <div className="flex items-center">
                 <img
-                  className="w-10 h-10 mr-2 object-cover rounded-lg"
+                  className="object-cover mr-2 w-10 h-10 rounded-lg"
                   src={nucleus?.icon.url}
                   alt=""
                 />
@@ -79,9 +80,7 @@ const AllNucleus = () => {
                   <h4 className="font-bold">{nucleus.title}</h4>
                   <p className="text-sm text-gray-600">
                     {
-                      nucleus.category?.length > 100
-                        ? nucleus.description?.substring(0, 60) + "..."
-                        : nucleus.description
+                      textShortener(nucleus.description, 60)
                     }
                   </p>
                   <div className="text-sm text-gray-600">

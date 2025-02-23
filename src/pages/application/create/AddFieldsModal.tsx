@@ -133,7 +133,7 @@ const AddFieldsModal = ({
             placeholder={label}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="w-full p-2 border-2 rounded-lg"
+            className="p-2 w-full rounded-lg border-2"
           />
         );
 
@@ -143,7 +143,7 @@ const AddFieldsModal = ({
             placeholder={label}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="w-full p-2 border-2 rounded-lg"
+            className="p-2 w-full rounded-lg border-2"
           />
         );
 
@@ -153,7 +153,7 @@ const AddFieldsModal = ({
             type="radio"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="w-full p-2 border-2 rounded-lg"
+            className="p-2 w-full rounded-lg border-2"
           />
         );
 
@@ -163,7 +163,7 @@ const AddFieldsModal = ({
             type="color"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="w-full p-2 border-2 rounded-lg"
+            className="p-2 w-full rounded-lg border-2"
           />
         );
 
@@ -173,7 +173,7 @@ const AddFieldsModal = ({
             type="file"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="w-full p-2 border-2 rounded-lg"
+            className="p-2 w-full rounded-lg border-2"
           />
         );
 
@@ -182,7 +182,7 @@ const AddFieldsModal = ({
           <select
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="w-full p-2 border-2 rounded-lg"
+            className="p-2 w-full rounded-lg border-2"
           >
             <option value="option1">Option 1</option>
             <option value="option2">Option 2</option>
@@ -197,7 +197,7 @@ const AddFieldsModal = ({
             placeholder={label}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="w-full p-2 border-2 rounded-lg"
+            className="p-2 w-full rounded-lg border-2"
           />
         );
     }
@@ -231,8 +231,8 @@ const AddFieldsModal = ({
         }}
       >
         <AlertDialog.Trigger asChild>
-          <button className="bg-blue text-white p-2 px-4 rounded-full">
-            <p className="flex items-center gap-2">
+          <button className="p-2 px-4 text-white rounded-full bg-blue">
+            <p className="flex gap-2 items-center">
               <FaPlus />
               Add Field
             </p>
@@ -242,7 +242,7 @@ const AddFieldsModal = ({
         <AlertDialog.Overlay className="fixed inset-0 bg-black bg-opacity-50" />
 
         <AlertDialog.Content className="fixed top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2  rounded-lg shadow-lg w-full px-3 max-w-[700px]">
-          <div className="bg-white p-8 rounded-lg">
+          <div className="p-8 bg-white rounded-lg">
             <div className="flex justify-between items-center">
               <AlertDialog.Title asChild>
                 <h3 className="text-xl font-semibold text-black">
@@ -260,7 +260,7 @@ const AddFieldsModal = ({
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="w-full p-2 border-2 rounded-lg"
+                className="p-2 w-full rounded-lg border-2"
               >
                 {FieldTypes.map((fieldType) => (
                   <option key={fieldType.value} value={fieldType.value}>
@@ -277,7 +277,7 @@ const AddFieldsModal = ({
                 placeholder="Label"
                 value={label}
                 onChange={(e) => setLabel(e.target.value)}
-                className="w-full p-2 border-2 rounded-lg"
+                className="p-2 w-full rounded-lg border-2"
               />
             </div>
 
@@ -288,20 +288,20 @@ const AddFieldsModal = ({
                 placeholder="Example"
                 value={example}
                 onChange={(e) => setExample(e.target.value)}
-                className="w-full p-2 border-2 rounded-lg"
+                className="p-2 w-full rounded-lg border-2"
               />
             </div>
 
-            <div className="mt-3 hidden">
+            <div className="hidden mt-3">
               <label className="text-sm text-gray-600">Value</label>
 
-              <div className="flex items-center gap-8">
+              <div className="flex gap-8 items-center">
                 {renderInput()}
 
                 {/* for color show preview */}
                 {type === "color" && (
                   <div
-                    className="mt-2 h-10 w-10 rounded-lg"
+                    className="mt-2 w-10 h-10 rounded-lg"
                     style={{ backgroundColor: value }}
                   ></div>
                 )}
@@ -315,14 +315,14 @@ const AddFieldsModal = ({
                 accept="image/*"
                 // value={iconImage}
                 onChange={(e) => handleIconChange(e)}
-                className="w-full p-2 border-2 rounded-lg"
+                className="p-2 w-full rounded-lg border-2"
               />
             </div>
 
             <div className="mt-3">
               <button
                 onClick={() => handleAddField()}
-                className="bg-primary text-white p-2 px-4 rounded-lg block w-full"
+                className="block p-2 px-4 w-full text-white rounded-lg bg-primary"
               >
                 {button}
               </button>

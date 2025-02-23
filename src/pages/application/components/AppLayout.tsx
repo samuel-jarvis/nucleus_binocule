@@ -24,7 +24,7 @@ const AppLayout = () => {
     <div>
       <TopBar />
       
-      <div className="max-w-[800px] mx-auto mt-4">
+      <div className="max-w-[1000px] mx-auto mt-4">
         <Outlet />
       </div>
     </div>

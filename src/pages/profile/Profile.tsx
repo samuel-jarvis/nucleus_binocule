@@ -65,20 +65,20 @@ const Profile = () => {
   return (
     <div className='max-w-[800px] mx-auto mt-4 px-4'>
       <h1
-        className='text-2xl font-bold mb-10'
+        className='mb-10 text-2xl font-bold'
       >Profile</h1>
 
       {/* profile image */}
       <div>
         <img
-          className='w-36 h-32 rounded-3xl mb-10 text-center m-auto object-cover'
+          className='object-cover m-auto mb-10 w-36 h-32 text-center rounded-3xl'
           src={userData.photo.url || 'https://avatar.iran.liara.run/public/boy?username=Ash'} alt="profile" />
 
-        <label htmlFor="" className='block text-center m-auto'>
+        <label htmlFor="" className='block m-auto text-center'>
           UpdateProfile Image
         </label>
         <input
-          className='text-center block m-auto'
+          className='block m-auto text-center'
         type="file" id="photo" name="photo" onChange={(e) => handleProfileImage(e)} />
       </div>
 
@@ -88,7 +88,7 @@ const Profile = () => {
         >
           <label htmlFor="firstName">First Name</label>
           <input 
-            className='border border-gray-300 rounded-md p-2 block w-full'
+            className='block p-2 w-full rounded-md border border-gray-300'
           type="text" id="firstName" name="firstName" value={userData.firstName} onChange={handleChange} />
         </div>
         <div
@@ -96,7 +96,7 @@ const Profile = () => {
         >
           <label htmlFor="lastName">Last Name</label>
           <input
-            className='border border-gray-300 rounded-md p-2 block w-full'
+            className='block p-2 w-full rounded-md border border-gray-300'
             type="text" id="lastName" name="lastName" value={userData.lastName} onChange={handleChange} />
         </div>
         <div
@@ -104,7 +104,7 @@ const Profile = () => {
         >
           <label htmlFor="email">Email</label>
           <input
-            className='border border-gray-300 rounded-md p-2 block w-full'
+            className='block p-2 w-full rounded-md border border-gray-300'
             type="email" id="email" name="email" value={userData.email} onChange={handleChange} />
         </div>
         <div
@@ -112,7 +112,7 @@ const Profile = () => {
         >
           <label htmlFor="phoneNumber">Phone Number</label>
           <input
-            className='border border-gray-300 rounded-md p-2 block w-full'
+            className='block p-2 w-full rounded-md border border-gray-300'
             type="text" id="phoneNumber" name="phoneNumber" value={userData.phoneNumber} onChange={handleChange} />
         </div>
         {/* byteId */}
@@ -121,11 +121,11 @@ const Profile = () => {
         >
           <label htmlFor="byteId">Byte ID</label>
           <input
-            className='border border-gray-300 rounded-md p-2 block w-full'
+            className='block p-2 w-full rounded-md border border-gray-300'
             type="text" id="byteId" name="byteId" value={userData.byteId.toUpperCase()} onChange={handleChange} />
         </div>
         <button
-          className='bg-blue-500 text-white rounded-md p-2 block w-full'
+          className='block p-2 w-full text-white bg-blue-500 rounded-md'
           type="submit">Submit</button>
       </form>
     </div>

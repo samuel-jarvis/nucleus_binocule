@@ -91,7 +91,6 @@ const CreateRWO = () => {
         </Tabs.Content>
 
         <Tabs.Content value="associations">
-          {/* <AddAssociations setSelectedTab={setSelectedTab} /> */}
           <Associations
             realWorldObject={realWorldObject}
             setRealWorldObject={setRealWorldObject}
