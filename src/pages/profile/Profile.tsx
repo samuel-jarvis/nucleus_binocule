@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { ProfileApi } from '../../api/profileApi';
 import { toast } from 'react-toastify';
-import { updateUser } from '../../reducers/authSlice';
+import { logout, updateUser } from '../../reducers/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { GoSignOut } from 'react-icons/go';
 
 export interface IUser {
   photo: {
@@ -14,8 +16,8 @@ export interface IUser {
   lastName: string;
   email: string;
   phoneNumber: string;
-  role: string; 
-  byteId: string; 
+  role: string;
+  byteId: string;
   country: string;
   isEnabled: boolean;
   lastLogin: string; // Assuming ISO 8601 format
@@ -62,6 +64,13 @@ const Profile = () => {
       });
   }
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <div className='max-w-[800px] mx-auto mt-4 px-4'>
       <h1
@@ -79,7 +88,7 @@ const Profile = () => {
         </label>
         <input
           className='block m-auto text-center'
-        type="file" id="photo" name="photo" onChange={(e) => handleProfileImage(e)} />
+          type="file" id="photo" name="photo" onChange={(e) => handleProfileImage(e)} />
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -87,9 +96,9 @@ const Profile = () => {
           className='mb-4'
         >
           <label htmlFor="firstName">First Name</label>
-          <input 
+          <input
             className='block p-2 w-full rounded-md border border-gray-300'
-          type="text" id="firstName" name="firstName" value={userData.firstName} onChange={handleChange} />
+            type="text" id="firstName" name="firstName" value={userData.firstName} onChange={handleChange} />
         </div>
         <div
           className='mb-4'
@@ -128,6 +137,18 @@ const Profile = () => {
           className='block p-2 w-full text-white bg-blue-500 rounded-md'
           type="submit">Submit</button>
       </form>
+
+      <ul className="space-y-2 mt-10 mb-10">
+        <li className="font-bold bg-red-50 cursor-pointer">
+          <p
+            onClick={() => handleLogout()}
+            className="flex items-center p-4 space-x-2 text-red-500 rounded-2xl border-2 border-red-50 cursor-pointer"
+          >
+            <GoSignOut />
+            <span>Logout</span>
+          </p>
+        </li>
+      </ul>
     </div>
   )
 }
