@@ -36,7 +36,7 @@ export interface IRealWorldObject  {
 
 const CreateRWO = () => {
   const [realWorldObject, setRealWorldObject] = useState<IRealWorldObject>({
-    primaryNature: "",
+    primaryNature: "things",
     topLevelObject: "",
     category: "",
     parentTemplate: "",

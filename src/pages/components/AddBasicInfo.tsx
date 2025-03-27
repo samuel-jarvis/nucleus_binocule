@@ -1,10 +1,10 @@
-import { IRealWorldObject } from '../application/CreateRWO';
-import HumanIcon from './icons/human.png'
-import ThingsIcon from './icons/thing.png'
-import SpacesIcon from './icons/space.png'
-import FilterSearchInput from '../application/components/FilterSearchInput';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { IRealWorldObject } from "../application/CreateRWO";
+import HumanIcon from "./icons/human.png";
+import ThingsIcon from "./icons/thing.png";
+import SpacesIcon from "./icons/space.png";
+import FilterSearchInput from "../application/components/FilterSearchInput";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // const PrimaryNatureList = ["Natural", "Artificial", "Hybrid"];
 const TopLevelTypeList = [
@@ -41,7 +41,7 @@ const AddBasicInfo = ({
       ...realWorldObject,
       parentTemplate: value,
     });
-  }
+  };
 
   const handleNextClick = () => {
     if (!realWorldObject.primaryNature) {
@@ -69,13 +69,13 @@ const AddBasicInfo = ({
       return;
     }
     setSelectedTab("attributes");
-  }
+  };
 
   const navigate = useNavigate();
 
   const handleBackHome = () => {
     navigate("/home");
-  }
+  };
 
   return (
     <div>
@@ -89,7 +89,7 @@ const AddBasicInfo = ({
         </p>
       </div>
 
-      <div className="mb-4 mt-7">
+      <div className="mb-4 mt-7 hidden">
         <h2 className="input_heading mb-2">Top level object type</h2>
 
         {TopLevelTypeList.map(({ name, description, icons: Icon }) => {
@@ -107,30 +107,28 @@ const AddBasicInfo = ({
               }
             >
               <div className="flex items-center ml-3 ">
-                <div className='mr-2'>
+                <div className="mr-2">
                   <img src={Icon} alt={name} className="" />
                 </div>
 
                 <div>
-                  <div className="font-semibold text-lg">
-                    {name}
-                  </div>
+                  <div className="font-semibold text-lg">{name}</div>
                   <div className="text-sm text-gray-500">{description}</div>
                 </div>
               </div>
 
               <div>
-                {
-                  isSelected ? (
-                    <div>
-                      <div className="w-4 h-4 bg-blue-500 rounded-full"> </div>
+                {isSelected ? (
+                  <div>
+                    <div className="w-4 h-4 bg-blue-500 rounded-full"> </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="w-4 h-4 border-2 border-blue rounded-full">
+                      {" "}
                     </div>
-                  ) : (
-                    <div>
-                      <div className="w-4 h-4 border-2 border-blue rounded-full"> </div>
-                    </div>
-                  )
-                }
+                  </div>
+                )}
               </div>
             </div>
           );
@@ -143,10 +141,12 @@ const AddBasicInfo = ({
         <div className="mt-4">
           <select
             value={realWorldObject.category}
-            onChange={(e) => setRealWorldObject({
-              ...realWorldObject,
-              category: e.target.value,
-            })}
+            onChange={(e) =>
+              setRealWorldObject({
+                ...realWorldObject,
+                category: e.target.value,
+              })
+            }
             className="w-full p-2 rounded-lg border-2"
           >
             <option value="">Select category</option>
@@ -177,10 +177,12 @@ const AddBasicInfo = ({
             placeholder="Enter title"
             className="w-full p-2 rounded-lg border-2"
             value={realWorldObject.title}
-            onChange={(e) => setRealWorldObject({
-              ...realWorldObject,
-              title: e.target.value,
-            })}
+            onChange={(e) =>
+              setRealWorldObject({
+                ...realWorldObject,
+                title: e.target.value,
+              })
+            }
           />
         </div>
       </div>
@@ -193,10 +195,12 @@ const AddBasicInfo = ({
             placeholder="Enter description"
             className="w-full p-2 rounded-lg border-2"
             value={realWorldObject.description}
-            onChange={(e) => setRealWorldObject({
-              ...realWorldObject,
-              description: e.target.value,
-            })}
+            onChange={(e) =>
+              setRealWorldObject({
+                ...realWorldObject,
+                description: e.target.value,
+              })
+            }
           />
         </div>
       </div>
@@ -208,10 +212,12 @@ const AddBasicInfo = ({
         <div className="mt-4">
           <select
             value={realWorldObject.mobilityType}
-            onChange={(e) => setRealWorldObject({
-              ...realWorldObject,
-              mobilityType: e.target.value,
-            })}
+            onChange={(e) =>
+              setRealWorldObject({
+                ...realWorldObject,
+                mobilityType: e.target.value,
+              })
+            }
             className="w-full p-2 rounded-lg border-2"
           >
             <option value="">Select mobility type</option>
@@ -220,7 +226,7 @@ const AddBasicInfo = ({
           </select>
         </div>
       </div>
-      
+
       <div className="mt-6">
         <button
           className="bg-primary text-white py-3 text-lg rounded-lg w-full"
@@ -239,14 +245,16 @@ const AddBasicInfo = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AddBasicInfo
+export default AddBasicInfo;
 
 const categoryList = [
   "Buildings",
+  "Facility",
   "Vehicles",
+  "Gadgets",
   "Trees",
   "Rivers",
   "Mountains",
@@ -257,6 +265,7 @@ const categoryList = [
   "Animals (External)",
   "Human Activities",
   "Statues",
+  "LandMarks",
   "Monuments",
-  "Others"
+  "Others",
 ];

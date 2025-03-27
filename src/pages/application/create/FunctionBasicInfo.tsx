@@ -1,22 +1,21 @@
-import { FaCircle, FaRegCircle } from "react-icons/fa6";
 // import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import FilterSearchInput from "../components/FilterSearchInput";
+import { IProperty } from "./CreateFunctionsOrActivities";
+
+export interface ICreateFunctionOrActivity {
+  title: string;
+  category: string;
+  description: string;
+  nucleusId: string;
+  attributes: IProperty[];
+}
 
 type FunctionBasicInfoProps = {
-  type: "function" | "activity";
-  setType: (value: "function" | "activity") => void;
-  title: string;
-  setTitle: (value: string) => void;
-  category: string;
-  setCategory: (value: string) => void;
-  description: string;
-  setDescription: (value: string) => void;
-  primaryObject: string;
-  setPrimaryObject: (value: string) => void;
+  formData: ICreateFunctionOrActivity;
+  setFormData: (formData: ICreateFunctionOrActivity) => void;
   setSelectedTab: (value: string) => void;
 };
-
-const typeList = ["function", "activity"];
 
 const categoryList = [
   "Entertainment",
@@ -31,62 +30,35 @@ const categoryList = [
 ];
 
 const FunctionBasicInfo = ({
-  type,
-  setType,
-  title,
-  setTitle,
-  category,
-  setCategory,
-  description,
-  setDescription,
-  setPrimaryObject,
+  formData,
+  setFormData,
+  setSelectedTab,
 }: FunctionBasicInfoProps) => {
-
   const handleNextClick = () => {
-    // if (!title || !category || !description || !primaryObject) {
-    //   toast.error("Please fill all the fields");
-    //   return;
-    // }
+    if (!formData.title || !formData.category || !formData.description) {
+      toast.error("Please fill all the fields");
+      return;
+    }
 
-    // setSelectedTab("fields");
+    console.log(formData);
+
+    setSelectedTab("attributes");
+  };
+
+  const setPrimaryObject = (primaryObject: string) => {
+    setFormData({ ...formData, nucleusId: primaryObject });
   };
 
   return (
     <div className="px-4">
       <h1 className="text-2xl font-semibold text-black">
-        Create {type.toLocaleUpperCase()} for Real World Objects
+        Create a new Object function template{" "}
       </h1>
 
       <div>
         <h3 className="text-lg text-black">
-          Real World Object Functionalities and Activities
+          Make sure a template for this object doesn’t already exist.
         </h3>
-
-        <div className="mt-6">
-          <h3>Type</h3>
-
-          <div className="grid grid-cols-2 gap-2">
-            {typeList.map((_) => (
-              <div
-                key={_}
-                className={`
-                  p-2 px-3 rounded-lg cursor-pointer border-2
-                ${_ === type ? "bg-black text-white" : ""}
-                `}
-                onClick={() => setType(_ as "function" | "activity")}
-              >
-                <div className="flex justify-between items-center">
-                  {_.toLocaleUpperCase()}
-                  {_ === type ? (
-                    <FaCircle className="inline-block ml-2" />
-                  ) : (
-                    <FaRegCircle className="inline-block ml-2" />
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
         <div className="mt-6">
           <h3 className="font-medium"> Find Primary Object</h3>
@@ -97,8 +69,10 @@ const FunctionBasicInfo = ({
           <h3>Title</h3>
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={formData.title}
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
             className="w-full p-2 rounded-lg border-2"
             placeholder="Enter title"
           />
@@ -108,8 +82,10 @@ const FunctionBasicInfo = ({
           <h3>Category</h3>
 
           <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            value={formData.category}
+            onChange={(e) =>
+              setFormData({ ...formData, category: e.target.value })
+            }
             className="w-full p-2 rounded-lg border-2"
           >
             <option value="">Select Category</option>
@@ -124,8 +100,10 @@ const FunctionBasicInfo = ({
         <div className="mt-6">
           <h3>Description</h3>
           <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={formData.description}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
             className="w-full p-2 rounded-lg border-2"
             placeholder="Enter description"
           />

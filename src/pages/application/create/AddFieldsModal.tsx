@@ -47,7 +47,7 @@ const AddFieldsModal = ({
   updateField,
   setSingleField,
 }: Props) => {
-  const [uploadingFile, setUploadingFile] = useState(false)
+  const [uploadingFile, setUploadingFile] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -81,8 +81,8 @@ const AddFieldsModal = ({
     }
 
     if (uploadingFile) {
-      toast.info('Uploading icon')
-      return
+      toast.info("Uploading icon");
+      return;
     }
 
     if (button === "Add Field") {
@@ -206,18 +206,18 @@ const AddFieldsModal = ({
   const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setUploadingFile(true)
+      setUploadingFile(true);
       FileUploadApiApi.upload(file)
         .then((res) => {
           console.log(res);
           setIconImage(res.data.url);
           toast.success("Icon uploaded successfully");
-          setUploadingFile(false)
+          setUploadingFile(false);
         })
         .catch((err) => {
           console.log(err);
           toast.error("Icon upload failed");
-          setUploadingFile(false)
+          setUploadingFile(false);
         });
     }
   };
@@ -249,6 +249,10 @@ const AddFieldsModal = ({
                   {button === "Add Field" ? "Add New Field" : "Update Field"}
                 </h3>
               </AlertDialog.Title>
+
+              <AlertDialog.Description className="text-sm text-gray-600 hidden">
+                {button === "Add Field"? "Add a new field" : "Update field"}
+              </AlertDialog.Description>
 
               <AlertDialog.Cancel asChild>
                 <FaTimes className="text-red-700" />
