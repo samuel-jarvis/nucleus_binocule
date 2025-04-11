@@ -121,7 +121,7 @@ const CreateActivity = () => {
 
             <div className="mt-6">
               <button
-                onClick={() => setSelectedTab("associations")}
+                onClick={() => setSelectedTab("basic_info")}
                 className="bg-white text-black font-semibold p-2 px-4 rounded-lg block w-full"
               >
                 Back

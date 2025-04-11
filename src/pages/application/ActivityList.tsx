@@ -81,8 +81,8 @@ const ActivityList = () => {
               alt={item.title}
               className="w-full h-48 object-cover rounded-lg mb-2"
             />
-            <h2 className="text-xl font-bold mb-1">{item.title}</h2>
-            <p className="text-gray-600">{item.description}</p>
+            <h2 className="font-bold mb-1">{item.title}</h2>
+            <p className="text-gray-600 text-sm mb-1">{item.description}</p>
 
             <div className="text-sm text-blue font-bold lowercase">
               {item.category}.{item.access}
@@ -92,7 +92,7 @@ const ActivityList = () => {
               Created At: {new Date(item.createdAt).toLocaleString()}
             </p>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between text-sm mt-4">
               <button
                 onClick={() => deleteActivity(item._id)}
                 className="bg-red-500 text-white font-semibold p-2 px-4 rounded-lg"
