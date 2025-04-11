@@ -50,7 +50,7 @@ const Home = () => {
             />
 
             <div>
-              <h4 className="font-bold">Template Name</h4>
+              <h4 className="font-bold">Object Template</h4>
               <p className="text-sm text-gray-600">Real World Object</p>
             </div>
           </div>
@@ -62,6 +62,7 @@ const Home = () => {
               </div>
             </Link>
           </div>
+          
         </div>
 
         <div className="mt-4 flex justify-between items-center bg-[#FEF6F6] p-4 rounded-lg">
@@ -75,13 +76,43 @@ const Home = () => {
             <div>
               <h4 className="font-bold">Functions</h4>
               <p className="text-sm text-gray-600">
-                RWO function and activities
+                RWO Function
               </p>
             </div>
           </div>
 
           <div>
-            <Link to="/create/functions-or-activities">
+            <Link to="/create/function">
+              <div className="bg-white p-2 rounded-lg">
+                <FaPlus className="text-2xl text-blue-500 cursor-pointer" />
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        <div className="mt-4 flex justify-between items-center bg-[#f7fef6] p-4 rounded-lg">
+          <div className="flex items-center">
+            <img
+              className="w-12 h-12 mr-2 object-cover rounded-lg"
+              src={functionIcon}
+              alt=""
+            />
+
+            <div>
+              <h4 className="font-bold">Activities</h4>
+              <p className="text-sm text-gray-600">
+              RWO Activities
+              </p>
+
+              {/* view all link */}
+              <Link className="text-blue-500 underline font-bold text-sm" to="/activity/list">
+                View All
+              </Link>
+            </div>
+          </div>
+
+          <div>
+            <Link to="/create/activity">
               <div className="bg-white p-2 rounded-lg">
                 <FaPlus className="text-2xl text-blue-500 cursor-pointer" />
               </div>

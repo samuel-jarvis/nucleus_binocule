@@ -13,3 +13,7 @@
 .navLink a.active {
   @apply underline text-black;
 }
+
+.button {
+  @apply bg-black text-white rounded-full py-2 px-4;
+}

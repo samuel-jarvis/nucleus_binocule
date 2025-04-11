@@ -11,6 +11,8 @@ import Profile from "./pages/profile/Profile";
 import './App.css'
 import NucleusDetails from "./pages/application/NucleusDetails";
 import NucleusList from "./pages/application/NucleusList";
+import CreateActivity from "./pages/application/create/CreateActivity";
+import ActivityList from "./pages/application/ActivityList";
 
 const App = () => {
   return (
@@ -37,7 +39,9 @@ const App = () => {
             <Route path="create/rwo" element={<CreateRWO />} />
             <Route path="objects" element={<NucleusList />} />
             <Route path="object/:id" element={<NucleusDetails />} />
-            <Route path="create/functions-or-activities" element={<CreateFunctionsOrActivities />} />
+            <Route path="create/function" element={<CreateFunctionsOrActivities />} />
+            <Route path="create/activity" element={<CreateActivity />} />
+            <Route path="activity/list" element={<ActivityList />} />
             <Route path="profile" element={<Profile />} />
           </Route>
 

@@ -18,15 +18,21 @@ type FunctionBasicInfoProps = {
 };
 
 const categoryList = [
-  "Entertainment",
-  "Education",
-  "social",
-  "Government",
-  "transportation",
-  "commerce",
-  "health",
-  "real estate",
-  "environment",
+  "Storage",
+  "Transportation",
+  "Protection",
+  "Communication",
+  "Measurement",
+  "Illumination",
+  "Cutting",
+  "Heating",
+  "Cooling",
+  "Containment",
+  "Support",
+  "Decoration",
+  "Cleaning",
+  "Construction",
+  "Navigation"
 ];
 
 const FunctionBasicInfo = ({
