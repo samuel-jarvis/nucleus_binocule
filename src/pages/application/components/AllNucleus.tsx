@@ -7,12 +7,18 @@ import { textShortener } from "../../../utility";
 
 export interface IRealWorldObjectResponse extends IRealWorldObject {
   user: any;
-  _id: string
+  _id: string;
   icon: {
     url: string;
-  }
+  };
 }
-const AllNucleus = () => {
+
+interface IProps {
+  title?: string;
+  size?: number;
+}
+
+const AllNucleus = ({ title, size }: IProps) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<IRealWorldObjectResponse[]>([]);
   const navigate = useNavigate();
@@ -20,10 +26,14 @@ const AllNucleus = () => {
   const fetchDate = () => {
     setLoading(true);
 
-    NucleusApi.getNucleus()
+    const params = {
+      limit: size,
+    };
+
+    NucleusApi.getNucleus(params)
       .then((res) => {
         console.log(res);
-        setData(res.docs)
+        setData(res.docs);
         setLoading(false);
       })
       .catch((err) => {
@@ -37,8 +47,9 @@ const AllNucleus = () => {
   }, []);
 
   if (loading) {
-    return <p
-      className="my-8 font-medium text-center text-black">Loading Nucleus</p>;
+    return (
+      <p className="my-8 font-medium text-center text-black">Loading Nucleus</p>
+    );
   }
 
   const handleClick = (id: string) => {
@@ -48,11 +59,16 @@ const AllNucleus = () => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h3 className="text-xl font-semibold text-black">Recently Created</h3>
+        <h3 className="text-xl font-semibold text-black">
+          {title ? title : "Recently Created Templates"}
+        </h3>
 
         <button>
-          <Link to="/objects" className="mt-8 ml-auto font-medium text-blue-500">
-          View All Templates
+          <Link
+            to="/objects"
+            className="mt-8 ml-auto font-medium text-blue-500"
+          >
+            View All Templates
           </Link>
         </button>
       </div>
@@ -60,7 +76,9 @@ const AllNucleus = () => {
       <div className="mt-4">
         <div className="grid grid-cols-2 gap-4">
           {data.map((nucleus) => (
-            <div key={nucleus._id} className="p-4 rounded-lg cursor-pointer bg-slate-50"
+            <div
+              key={nucleus._id}
+              className="p-4 rounded-lg cursor-pointer bg-slate-50"
               onClick={() => handleClick(nucleus._id)}
             >
               <div className="flex items-center">
@@ -70,18 +88,12 @@ const AllNucleus = () => {
                   alt=""
                 />
 
-                <div className="hidden">
-                  {
-                    nucleus?.icon.url
-                  }
-                </div>
+                <div className="hidden">{nucleus?.icon.url}</div>
 
                 <div>
                   <h4 className="font-bold">{nucleus.title}</h4>
                   <p className="text-sm text-gray-600">
-                    {
-                      textShortener(nucleus.description, 60)
-                    }
+                    {textShortener(nucleus.description, 60)}
                   </p>
                   <div className="text-sm text-gray-600">
                     Category: {nucleus.category}

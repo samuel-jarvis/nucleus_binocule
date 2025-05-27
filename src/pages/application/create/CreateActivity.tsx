@@ -30,7 +30,7 @@ const CreateActivity = () => {
       setFile(selectedFile);
     }
   };
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = async () => {
@@ -43,16 +43,18 @@ const CreateActivity = () => {
     payload.append("access", formData.access);
     payload.append("file", file!);
 
-   ActivityApi.createActivity(payload)
-    .then((response) => {
-      console.log(response);
-      setIsLoading(false)
-      toast.info('Activity created successfully');
-      navigate('/activity/list')
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    ActivityApi.createActivity(payload)
+      .then((response) => {
+        console.log(response);
+        setIsLoading(false);
+        toast.info("Activity created successfully");
+        navigate("/activity/list");
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        toast.error(error.response.data.message || "Something went wrong");
+      });
   };
 
   return (

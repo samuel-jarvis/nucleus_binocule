@@ -38,15 +38,22 @@ const FunctionIcon = ({ formData, setSelectedTab }: Props) => {
     setIsLoading(true);
 
     ObjectFunctionApi.createObjectFunction(payload)
-      .then(() => {
-        toast.success("Function created successfully");
-        navigate('/home')
+      .then((res) => {
+        const data = res.data;
+        console.log(data);
+        toast.success("Function created for Object Template");
+
+        if (data.nucleus) {
+          navigate(`/object/${data.nucleus}`);
+        } else {
+          navigate("/home");
+        }
       })
       .catch((err) => {
         console.log(err);
-        toast.error(err.response.data.message || "Something went wrong");
         setIsLoading(false);
-      })
+        toast.error(err.response.data.message || "Something went wrong");
+      });
   };
 
   return (
@@ -100,7 +107,7 @@ const FunctionIcon = ({ formData, setSelectedTab }: Props) => {
         <button
           onClick={() => handleSubmit()}
           className="bg-black text-white py-3 px-4 rounded-lg block w-full"
-          // disabled={isLoading}
+          disabled={isLoading}
         >
           {isLoading ? "Creating..." : "Create Function"}
         </button>

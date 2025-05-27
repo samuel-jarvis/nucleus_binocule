@@ -27,7 +27,7 @@ const CategoryList = [
   "Lodging",
   "Events/Exhibitions",
   "Personal Services",
-  "Others"
+  "Others",
 ];
 
 const ActivityBasicInfo = ({

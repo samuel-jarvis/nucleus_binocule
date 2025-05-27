@@ -4,12 +4,11 @@ import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 
 import functionIcon from "../../assets/icons/function.png";
-import rwoIcon from "../../assets/icons/object.png"
+import rwoIcon from "../../assets/icons/object.png";
 import AllNucleus from "./components/AllNucleus";
 // import activityIcon from "../../assets/icons/activity.png";
 
 const Home = () => {
-
   return (
     <div className="px-4 mb-10">
       <div className="mt-8">
@@ -62,7 +61,6 @@ const Home = () => {
               </div>
             </Link>
           </div>
-          
         </div>
 
         <div className="mt-4 flex justify-between items-center bg-[#FEF6F6] p-4 rounded-lg">
@@ -75,9 +73,7 @@ const Home = () => {
 
             <div>
               <h4 className="font-bold">Functions</h4>
-              <p className="text-sm text-gray-600">
-                RWO Function
-              </p>
+              <p className="text-sm text-gray-600">RWO Function</p>
             </div>
           </div>
 
@@ -100,12 +96,13 @@ const Home = () => {
 
             <div>
               <h4 className="font-bold">Activities</h4>
-              <p className="text-sm text-gray-600">
-              RWO Activities
-              </p>
+              <p className="text-sm text-gray-600">RWO Activities</p>
 
               {/* view all link */}
-              <Link className="text-blue-500 underline font-bold text-sm" to="/activity/list">
+              <Link
+                className="text-blue-500 underline font-bold text-sm"
+                to="/activity/list"
+              >
                 View All
               </Link>
             </div>
@@ -122,7 +119,7 @@ const Home = () => {
       </div>
 
       <div className="mt-8">
-        <AllNucleus />
+        <AllNucleus size={6} />
       </div>
     </div>
   );

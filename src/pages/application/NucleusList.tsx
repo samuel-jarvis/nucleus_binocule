@@ -1,8 +1,9 @@
-import SearchNucleus from './components/SearchNucleus'
+import AllNucleus from "./components/AllNucleus";
+import SearchNucleus from "./components/SearchNucleus";
 
 const NucleusList = () => {
   return (
-    <div className='px-4'>
+    <div className="px-4">
       <div>
         <h2 className="text-xl font-medium text-black mt-8">Search Existing</h2>
         <p className="text-gray-600 text-sm">
@@ -11,8 +12,12 @@ const NucleusList = () => {
 
         <SearchNucleus />
       </div>
-    </div>
-  )
-}
 
-export default NucleusList
+      <div>
+        <AllNucleus title={"All Nucleus"} />
+      </div>
+    </div>
+  );
+};
+
+export default NucleusList;

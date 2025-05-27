@@ -7,14 +7,13 @@ import { IRealWorldObject } from "../CreateRWO";
 
 type Props = {
   realWorldObject: IRealWorldObject & { associations: Associations };
-  setRealWorldObject: (realWorldObject: IRealWorldObject & { associations: Associations }) => void;
+  setRealWorldObject: (
+    realWorldObject: IRealWorldObject & { associations: Associations }
+  ) => void;
   setSelectedTab: (value: string) => void;
 };
 
-const AddVisuals = ({
-  realWorldObject,
-  setSelectedTab,
-}: Props) => {
+const AddVisuals = ({ realWorldObject, setSelectedTab }: Props) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -47,39 +46,38 @@ const AddVisuals = ({
         setIsLoading(false);
         navigate("/home");
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
+        toast.error(error.response.data.message || "an error occurred");
       });
-  }
+  };
 
   const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setFile(file);
-    
+
     // image preview
     const reader = new FileReader();
     reader.onload = () => {
       setImagePreview(reader.result as string);
     };
     reader.readAsDataURL(file);
-
   };
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   return (
     <div>
-      <div className='mb-8'>
+      <div className="mb-8">
         <h2 className="text-2xl font-semibold text-gray-800">
-          <span className="text-blue mr-1">
-            + Add
-          </span>
+          <span className="text-blue mr-1">+ Add</span>
           Visual Representation
         </h2>
         <p className="mt-4 text-lg">
-          What icons or visual will represent this object template.        </p>
+          What icons or visual will represent this object template.{" "}
+        </p>
       </div>
 
       <div>
@@ -99,16 +97,19 @@ const AddVisuals = ({
 
         {imagePreview && (
           <div className="mt-4">
-            <img src={imagePreview} alt="icon" className="w-32 h-32 object-cover rounded-xl" />
+            <img
+              src={imagePreview}
+              alt="icon"
+              className="w-32 h-32 object-cover rounded-xl"
+            />
           </div>
         )}
       </div>
 
       <div className="mt-10">
-        <span className="text-blue text-sm mr-1">
-          NOTE:
-        </span>
-        Templates published are subjected to modification, rejection, deletion or approval after undergoing review.
+        <span className="text-blue text-sm mr-1">NOTE:</span>
+        Templates published are subjected to modification, rejection, deletion
+        or approval after undergoing review.
       </div>
 
       <div className="mt-6">
