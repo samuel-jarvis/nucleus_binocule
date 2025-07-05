@@ -86,12 +86,12 @@ const CreateRWO = () => {
         onValueChange={(value) => setSelectedTab(value)}
       >
         <Tabs.Content value="get_started">
-          <div className="max-w-2xl mx-auto p-6">
+          <div className="max-w-2xl mx-auto p-2">
             <h2 className="text-2xl font-bold mb-6 text-center">
               How would you like to create your Real World Object?
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
               {/* AI Generation Option */}
               <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="text-center">
@@ -176,12 +176,19 @@ const CreateRWO = () => {
                         "Generate with AI"
                       )}
                     </button>
+                    <p>or</p>
+                    <button
+                      onClick={() => setSelectedTab("basic_info")}
+                      className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors"
+                    >
+                      Start Manual Entry
+                    </button>
                   </div>
                 </div>
               </div>
 
               {/* Manual Entry Option */}
-              <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow hidden">
                 <div className="text-center">
                   <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
                     <svg
