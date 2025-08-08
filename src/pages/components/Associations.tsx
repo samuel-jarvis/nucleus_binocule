@@ -104,6 +104,7 @@ const Associations = ({
                 <input
                   type="text"
                   placeholder="enter to add"
+                  id={`input-${association.key}`}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleAddAssociation(
@@ -118,13 +119,16 @@ const Associations = ({
 
                 <FaCirclePlus
                   onClick={() => {
-                    const input = document.querySelector(
-                      `input[placeholder="${association.placeholder}"]`
+                    const input = document.getElementById(
+                      `input-${association.key}`
                     ) as HTMLInputElement;
-                    handleAddAssociation(
-                      association.key as keyof Associations,
-                      input.value
-                    );
+                    if (input && input.value.trim()) {
+                      handleAddAssociation(
+                        association.key as keyof Associations,
+                        input.value
+                      );
+                      input.value = "";
+                    }
                   }}
                   className="cursor-pointer text-blue"
                 />
