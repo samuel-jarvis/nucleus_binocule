@@ -16,6 +16,11 @@ const ActivityApi = {
     const response = await api.delete(`/activity/${id}`);
     return response.data;
   },
+
+  updateActivity: async (id: string, body: any) => {
+    const response = await api.put(`/activity/${id}`, body);
+    return response.data;
+  },
 };
 
 export default ActivityApi;
