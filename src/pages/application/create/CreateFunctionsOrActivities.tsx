@@ -10,13 +10,15 @@ export type IProperty = {
   type: string;
   label: string;
   example: string;
+  tag?: "primary" | "secondary";
+  icon?: string | null;
 };
 
 export interface ICreateFunctionOrActivity {
   title: string;
   category: string;
   description: string;
-  nucleusId: string;
+  nucleusIds: string[];
   attributes: IProperty[];
 }
 
@@ -27,7 +29,7 @@ const CreateFunctionsOrActivities = () => {
     title: "",
     category: "",
     description: "",
-    nucleusId: "",
+    nucleusIds: [],
     attributes: [],
   });
 

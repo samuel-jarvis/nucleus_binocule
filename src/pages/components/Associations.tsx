@@ -2,16 +2,16 @@ import { toast } from "react-toastify";
 import { IRealWorldObject } from "../application/CreateRWO";
 import { FaCirclePlus, FaCircleMinus } from "react-icons/fa6";
 type Associations = {
-  creator: string[];
-  owner: string[];
-  user: string[];
-  inCharge: string[];
+  creator?: string[];
+  owner?: string[];
+  user?: string[];
+  inCharge?: string[];
 };
 
 type AssociationsProps = {
   realWorldObject: IRealWorldObject & { associations: Associations };
   setRealWorldObject: (
-    realWorldObject: IRealWorldObject & { associations: Associations }
+    realWorldObject: IRealWorldObject & { associations: Associations },
   ) => void;
   setSelectedTab: (value: string) => void;
 };
@@ -47,7 +47,8 @@ const Associations = ({
   const handleAddAssociation = (key: keyof Associations, value: string) => {
     if (!value.trim()) return;
 
-    if (realWorldObject.associations[key].includes(value)) {
+    const existing = realWorldObject.associations[key] ?? [];
+    if (existing.includes(value)) {
       toast.info("Association already exists");
       return;
     }
@@ -56,29 +57,23 @@ const Associations = ({
       ...realWorldObject,
       associations: {
         ...realWorldObject.associations,
-        [key]: [...realWorldObject.associations[key], value],
+        [key]: [...existing, value],
       },
     });
   };
 
   const handleRemoveAssociation = (key: keyof Associations, value: string) => {
+    const existing = realWorldObject.associations[key] ?? [];
     setRealWorldObject({
       ...realWorldObject,
       associations: {
         ...realWorldObject.associations,
-        [key]: realWorldObject.associations[key].filter(
-          (v: string) => v !== value
-        ),
+        [key]: existing.filter((v: string) => v !== value),
       },
     });
   };
 
   const handleContinue = () => {
-    if (realWorldObject.associations.creator.length === 0) {
-      alert("Creator is required");
-      return;
-    }
-
     setSelectedTab("visuals");
   };
 
@@ -109,7 +104,7 @@ const Associations = ({
                     if (e.key === "Enter") {
                       handleAddAssociation(
                         association.key as keyof Associations,
-                        e.currentTarget.value
+                        e.currentTarget.value,
                       );
                       e.currentTarget.value = "";
                     }
@@ -120,12 +115,12 @@ const Associations = ({
                 <FaCirclePlus
                   onClick={() => {
                     const input = document.getElementById(
-                      `input-${association.key}`
+                      `input-${association.key}`,
                     ) as HTMLInputElement;
                     if (input && input.value.trim()) {
                       handleAddAssociation(
                         association.key as keyof Associations,
-                        input.value
+                        input.value,
                       );
                       input.value = "";
                     }
@@ -135,9 +130,11 @@ const Associations = ({
               </div>
 
               <div className="flex flex-wrap gap-2 mt-2">
-                {realWorldObject.associations[
-                  association.key as keyof Associations
-                ].map((value) => (
+                {(
+                  realWorldObject.associations[
+                    association.key as keyof Associations
+                  ] ?? []
+                ).map((value) => (
                   <div
                     key={value}
                     className="flex justify-between items-center p-2 bg-gray-100 rounded"
@@ -147,7 +144,7 @@ const Associations = ({
                       onClick={() =>
                         handleRemoveAssociation(
                           association.key as keyof Associations,
-                          value
+                          value,
                         )
                       }
                       className="text-red-500 cursor-pointer hover:text-red-700"
@@ -164,7 +161,7 @@ const Associations = ({
         <div className="mt-6">
           <button
             onClick={() => handleContinue()}
-            className="block p-2 px-4 w-full text-white rounded-lg bg-primary"
+            className="black_button w-full"
           >
             Continue
           </button>

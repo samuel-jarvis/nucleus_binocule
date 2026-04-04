@@ -8,6 +8,8 @@ type IProperty = {
   type: string;
   label: string;
   example: string;
+  tag?: "primary" | "secondary";
+  icon?: string | null;
 };
 
 type Props = {
@@ -50,9 +52,7 @@ const FunctionAttributes = ({
             information components
           </h2>
 
-          <p className="mt-4">
-            Add relevant information for this function
-          </p>
+          <p className="mt-4">Add relevant information for this function</p>
         </div>
       </div>
 
@@ -74,7 +74,7 @@ const FunctionAttributes = ({
               <div
                 key={index}
                 className="bg-[#fafbfc] p-4 rounded-lg flex justify-between items-center mb-4"
-              // onClick={() => handleUpdateField(index)}
+                // onClick={() => handleUpdateField(index)}
               >
                 <div>
                   <h4 className="font-semibold">{field.label}</h4>

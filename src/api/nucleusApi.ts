@@ -17,7 +17,8 @@ export const NucleusApi = {
     return response.data;
   },
   updateNucleus: async (id: string, body: any) => {
-    const response = await api.put(`/nucleus/${id}`, body);
+    const payload = body instanceof FormData ? body : { ...body, id };
+    const response = await api.put('/nucleus', payload);
     return response.data;
   },
   deleteNucleus: async (id: string) => {

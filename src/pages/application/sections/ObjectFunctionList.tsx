@@ -7,6 +7,8 @@ export type IProperty = {
   type: string;
   label: string;
   example: string;
+  tag?: "primary" | "secondary";
+  icon?: string | null;
 };
 
 export interface ICreateFunctionOrActivity {

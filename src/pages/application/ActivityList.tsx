@@ -37,7 +37,7 @@ const ActivityList = () => {
 
   const deleteActivity = (id: string) => {
     const confirm = window.confirm(
-      "Are you sure you want to delete this activity?"
+      "Are you sure you want to delete this activity?",
     );
 
     if (!confirm) return;
@@ -61,7 +61,7 @@ const ActivityList = () => {
   }
 
   return (
-    <div>
+    <div className="px-2">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold mb-4">Activity List</h1>
 

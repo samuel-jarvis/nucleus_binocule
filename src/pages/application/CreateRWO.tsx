@@ -8,17 +8,21 @@ import AddProperties from "./create/AddProperties";
 import AddVisuals from "./create/AddVisuals";
 import AiAPI from "../../api/aiApi";
 
+export type PropertyTag = "primary" | "secondary";
+
 type IProperty = {
   type: string;
   label: string;
   example: string;
   value: string;
+  tag?: PropertyTag;
+  icon?: string | null;
 };
 
 interface AiResponse {
   description: string;
   mobilityType: string;
-  attributes: IProperty[];
+  attributes: (Omit<IProperty, "tag"> & { tag?: PropertyTag })[];
 }
 
 export interface IRealWorldObject {
@@ -74,7 +78,10 @@ const CreateRWO = () => {
       title: item,
       description: response.description,
       mobilityType: response.mobilityType,
-      attributes: response.attributes,
+      attributes: response.attributes.map((attr) => ({
+        ...attr,
+        tag: attr.tag ?? "primary",
+      })),
     });
   };
 
@@ -138,7 +145,7 @@ const CreateRWO = () => {
                           } catch (error) {
                             console.error(
                               "Error generating properties:",
-                              error
+                              error,
                             );
                           } finally {
                             setIsGenerating(false);

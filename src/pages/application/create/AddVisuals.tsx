@@ -8,7 +8,7 @@ import { IRealWorldObject } from "../CreateRWO";
 type Props = {
   realWorldObject: IRealWorldObject & { associations: Associations };
   setRealWorldObject: (
-    realWorldObject: IRealWorldObject & { associations: Associations }
+    realWorldObject: IRealWorldObject & { associations: Associations },
   ) => void;
   setSelectedTab: (value: string) => void;
 };
@@ -35,8 +35,21 @@ const AddVisuals = ({ realWorldObject, setSelectedTab }: Props) => {
     data.append("title", realWorldObject.title);
     data.append("description", realWorldObject.description);
     data.append("mobilityType", realWorldObject.mobilityType);
-    data.append("attributes", JSON.stringify(realWorldObject.attributes));
-    data.append("parts", JSON.stringify(realWorldObject.parts));
+    data.append(
+      "attributes",
+      JSON.stringify(
+        realWorldObject.attributes.map((a) => ({
+          ...a,
+          tag: a.tag ?? "primary",
+        })),
+      ),
+    );
+    data.append(
+      "parts",
+      JSON.stringify(
+        realWorldObject.parts.map((p) => ({ ...p, tag: p.tag ?? "primary" })),
+      ),
+    );
     data.append("associations", JSON.stringify(realWorldObject.associations));
     data.append("file", file as Blob);
 
@@ -115,10 +128,10 @@ const AddVisuals = ({ realWorldObject, setSelectedTab }: Props) => {
       <div className="mt-6">
         <button
           onClick={() => handleSubmit()}
-          className="bg-black text-white py-3 px-4 rounded-lg block w-full"
+          className="black_button w-full"
           disabled={isLoading}
         >
-          {isLoading ? "Creating..." : "Create Template"}
+          {isLoading ? "Creating..." : "Publish Template"}
         </button>
       </div>
 

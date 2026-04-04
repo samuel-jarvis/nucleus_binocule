@@ -74,11 +74,11 @@ const AllNucleus = ({ title, size }: IProps) => {
       </div>
 
       <div className="mt-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-4">
           {data.map((nucleus) => (
             <div
               key={nucleus._id}
-              className="p-4 rounded-lg cursor-pointer bg-slate-50"
+              className="p-4 rounded-lg cursor-pointer bg-[#F9F9F9]"
               onClick={() => handleClick(nucleus._id)}
             >
               <div className="flex items-center">

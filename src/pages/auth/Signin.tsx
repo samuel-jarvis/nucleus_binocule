@@ -13,7 +13,6 @@ const Signin = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
-
   const [signinData, setSigninData] = useState({
     email: "",
     password: "",
@@ -40,20 +39,23 @@ const Signin = () => {
           token: res.token,
           user: res.user,
         };
-        
-        dispatch(login(payload))
+
+        dispatch(login(payload));
         navigate("/home");
       })
       .catch((err) => {
         setLoading(false);
         console.log(err);
-        setError(err.response.data.message || "Something went wrong. Please try again later.");
+        setError(
+          err.response.data.message ||
+            "Something went wrong. Please try again later.",
+        );
       });
   };
 
   return (
     <div>
-      <div className="p-4 px-8 max-w-[500px] mx-auto mt-20 rounded-lg shadow mb-20">
+      <div className="p-4 px-8 max-w-[500px] mx-auto mt-20 rounded-3xl shadow mb-20">
         <div className="text-center">
           <img src={FullLogo} alt="Logo" className="mx-auto h-20" />
         </div>
@@ -117,24 +119,24 @@ const Signin = () => {
           {/* forgot password */}
           <Link
             to="/community/forgot-password"
-            className="block text-sm underline text-primary"
+            className="block text-sm underline text-blue-500 font-medium"
           >
             Forgot password?
           </Link>
 
           <button
-            className="p-2 mt-10 w-full font-bold text-white bg-black rounded-full"
+            className="p-2 py-4 mt-10 w-full font-bold text-white bg-black rounded-full"
             type="submit"
             disabled={loading}
           >
-            {loading ? "Loading..." : "Signin"}
+            {loading ? "Loading..." : "Sign In"}
           </button>
         </form>
 
         <div className="mt-4 text-center">
           <p>
             Don't have an account?{" "}
-            <Link to="/signup" className="text-red">
+            <Link to="/signup" className="text-blue-500 font-medium">
               Create Byte Account
             </Link>
           </p>

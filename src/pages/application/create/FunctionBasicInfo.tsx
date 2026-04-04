@@ -1,15 +1,7 @@
 // import { toast } from "react-toastify";
 import { toast } from "react-toastify";
-import FilterSearchInput from "../components/FilterSearchInput";
-import { IProperty } from "./CreateFunctionsOrActivities";
-
-export interface ICreateFunctionOrActivity {
-  title: string;
-  category: string;
-  description: string;
-  nucleusId: string;
-  attributes: IProperty[];
-}
+import MultiFilterSearchInput from "../components/MultiFilterSearchInput";
+import { ICreateFunctionOrActivity } from "./CreateFunctionsOrActivities";
 
 type FunctionBasicInfoProps = {
   formData: ICreateFunctionOrActivity;
@@ -41,7 +33,12 @@ const FunctionBasicInfo = ({
   setSelectedTab,
 }: FunctionBasicInfoProps) => {
   const handleNextClick = () => {
-    if (!formData.title || !formData.category || !formData.description) {
+    if (
+      !formData.title ||
+      !formData.category ||
+      !formData.description ||
+      formData.nucleusIds.length === 0
+    ) {
       toast.error("Please fill all the fields");
       return;
     }
@@ -51,8 +48,8 @@ const FunctionBasicInfo = ({
     setSelectedTab("attributes");
   };
 
-  const setPrimaryObject = (primaryObject: string) => {
-    setFormData({ ...formData, nucleusId: primaryObject });
+  const setPrimaryObjects = (primaryObjects: string[]) => {
+    setFormData({ ...formData, nucleusIds: primaryObjects });
   };
 
   return (
@@ -67,8 +64,11 @@ const FunctionBasicInfo = ({
         </h3>
 
         <div className="mt-6">
-          <h3 className="font-medium"> Find Primary Object</h3>
-          <FilterSearchInput setPrimaryObject={setPrimaryObject} />
+          <h3 className="font-medium">Find Objects</h3>
+          <MultiFilterSearchInput
+            selectedIds={formData.nucleusIds}
+            setSelectedIds={setPrimaryObjects}
+          />
         </div>
 
         <div className="mt-6">

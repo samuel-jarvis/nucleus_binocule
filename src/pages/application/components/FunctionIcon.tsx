@@ -22,13 +22,18 @@ const FunctionIcon = ({ formData, setSelectedTab }: Props) => {
   };
 
   const handleSubmit = async () => {
+    if (!formData.nucleusIds || formData.nucleusIds.length === 0) {
+      toast.error("Please select at least one object");
+      return;
+    }
+
     const payload = new FormData();
 
     payload.append("title", formData.title);
     payload.append("category", formData.category);
     payload.append("description", formData.description);
     payload.append("type", formData.description);
-    payload.append("nucleusId", formData.nucleusId);
+    payload.append("nucleusIds", JSON.stringify(formData.nucleusIds));
     payload.append("attributes", JSON.stringify(formData.attributes));
 
     if (file) {
@@ -39,12 +44,12 @@ const FunctionIcon = ({ formData, setSelectedTab }: Props) => {
 
     ObjectFunctionApi.createObjectFunction(payload)
       .then((res) => {
-        const data = res.data;
-        console.log(data);
-        toast.success("Function created for Object Template");
+        console.log(res);
+        setIsLoading(false);
+        toast.success("Function created for selected object templates");
 
-        if (data.nucleus) {
-          navigate(`/object/${data.nucleus}`);
+        if (formData.nucleusIds.length === 1) {
+          navigate(`/object/${formData.nucleusIds[0]}`);
         } else {
           navigate("/home");
         }

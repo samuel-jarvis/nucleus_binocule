@@ -229,7 +229,7 @@ const AddBasicInfo = ({
 
       <div className="mt-6">
         <button
-          className="bg-primary text-white py-3 text-lg rounded-lg w-full"
+          className="black_button w-full"
           onClick={() => handleNextClick()}
         >
           Next

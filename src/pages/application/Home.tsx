@@ -1,5 +1,5 @@
 // import { useState } from "react";
-import HomeIllustration from "../../assets/illustrations/homeIllustration.png";
+import HomeIllustration from "../../assets/illustrations/new_home_illus.png";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 
@@ -12,9 +12,10 @@ const Home = () => {
   return (
     <div className="px-4 mb-10">
       <div className="mt-8">
-        <h2 className="text-2xl font-semibold text-gray-600 text-center">
-          A spatial web profile template for real world objects.
-        </h2>
+        <h2 className="text-2xl font-semibold text-center">Create Templates</h2>
+        <p className="text-center text-gray-600">
+          For anything of the real world
+        </p>
 
         <div className="mt-4">
           <img
@@ -40,7 +41,7 @@ const Home = () => {
           </p>
         </div>
 
-        <div className="mt-4 flex justify-between items-center bg-[#F6F8FE] p-4 rounded-lg">
+        <div className="mt-4 flex justify-between items-center bg-[#D1DDFF] p-4 rounded-full">
           <div className="flex items-center">
             <img
               className="w-10 h-10 mr-2 object-cover rounded-lg"
@@ -56,14 +57,14 @@ const Home = () => {
 
           <div>
             <Link to="/create/rwo">
-              <div className="bg-white p-2 rounded-lg">
+              <div className="bg-white p-2 rounded-full">
                 <FaPlus className="text-2xl text-blue-500 cursor-pointer" />
               </div>
             </Link>
           </div>
         </div>
 
-        <div className="mt-4 flex justify-between items-center bg-[#FEF6F6] p-4 rounded-lg">
+        <div className="mt-4 flex justify-between items-center bg-[#FFC9C9] p-4 rounded-full">
           <div className="flex items-center">
             <img
               className="w-12 h-12 mr-2 object-cover rounded-lg"
@@ -79,14 +80,14 @@ const Home = () => {
 
           <div>
             <Link to="/create/function">
-              <div className="bg-white p-2 rounded-lg">
+              <div className="bg-white p-2 rounded-full">
                 <FaPlus className="text-2xl text-blue-500 cursor-pointer" />
               </div>
             </Link>
           </div>
         </div>
 
-        <div className="mt-4 flex justify-between items-center bg-[#f7fef6] p-4 rounded-lg">
+        <div className="mt-4 flex justify-between items-center bg-[#f7fef6] p-4 rounded-full">
           <div className="flex items-center">
             <img
               className="w-12 h-12 mr-2 object-cover rounded-lg"
@@ -110,7 +111,7 @@ const Home = () => {
 
           <div>
             <Link to="/create/activity">
-              <div className="bg-white p-2 rounded-lg">
+              <div className="bg-white p-2 rounded-full">
                 <FaPlus className="text-2xl text-blue-500 cursor-pointer" />
               </div>
             </Link>

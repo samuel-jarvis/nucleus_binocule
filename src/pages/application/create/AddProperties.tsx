@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMinus } from "react-icons/fa6";
 import AddFieldsModal from "./AddFieldsModal";
 import { IRealWorldObject } from "../CreateRWO";
@@ -9,6 +9,8 @@ type IProperty = {
   type: string;
   label: string;
   example: string;
+  tag?: "primary" | "secondary";
+  icon?: string | null;
 };
 
 type Props = {
@@ -18,13 +20,17 @@ type Props = {
   setSelectedTab: (value: string) => void;
 };
 
-const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: Props) => {
+const AddProperties = ({
+  realWorldObject,
+  setRealWorldObject,
+  setSelectedTab,
+}: Props) => {
   const [singleField, setSingleField] = useState({} as IProperty | null);
 
   const handleContinue = () => {
     console.log(realWorldObject);
     setSelectedTab("parts");
-  }
+  };
 
   const handleRemoveField = (index?: number) => {
     if (!realWorldObject.attributes) return;
@@ -33,7 +39,16 @@ const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: 
     setFields(newFields);
   };
 
-  const [fields, setFields] = useState(realWorldObject.attributes);
+  const [fields, setFields] = useState<IProperty[]>(
+    (realWorldObject.attributes || []).map((f: any) => ({
+      ...f,
+      tag: f.tag ?? "primary",
+    })),
+  );
+
+  const handleTagChange = (index: number, tag: "primary" | "secondary") => {
+    setFields((prev) => prev.map((f, i) => (i === index ? { ...f, tag } : f)));
+  };
 
   useEffect(() => {
     setRealWorldObject({
@@ -47,9 +62,7 @@ const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: 
       <div className="mb-10">
         <div className="my-8">
           <h2 className="text-2xl font-semibold text-gray-700">
-            <span className="text-blue mr-1">
-              + Add
-            </span>
+            <span className="text-blue mr-1">+ Add</span>
             information components
           </h2>
 
@@ -80,16 +93,36 @@ const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: 
 
         <div className="mt-4">
           {fields?.length > 0 &&
-            fields.map((field: { label: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; type: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; example: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }, index: Key | null | undefined) => (
+            fields.map((field: IProperty, index: number) => (
               <div
                 key={index}
                 className="bg-[#fafbfc] p-4 rounded-lg flex justify-between items-center mb-4"
-              // onClick={() => handleUpdateField(index)}
+                // onClick={() => handleUpdateField(index)}
               >
                 <div>
                   <h4 className="font-semibold">{field.label}</h4>
                   <p className="text-sm text-gray-600">Type: {field.type}</p>
-                  <p className="text-sm text-gray-600">Example: {field.example}</p>
+                  <p className="text-sm text-gray-600">
+                    Example: {field.example}
+                  </p>
+                  <div className="mt-2">
+                    <label className="text-sm text-gray-600 mr-2">Tag:</label>
+                    <select
+                      value={
+                        (field.tag ?? "primary") as "primary" | "secondary"
+                      }
+                      onChange={(e) =>
+                        handleTagChange(
+                          index,
+                          e.target.value as "primary" | "secondary",
+                        )
+                      }
+                      className="p-2 rounded-lg border-2 bg-white"
+                    >
+                      <option value="primary">Primary</option>
+                      <option value="secondary">Secondary</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div>
@@ -108,7 +141,7 @@ const AddProperties = ({ realWorldObject, setRealWorldObject, setSelectedTab }: 
       <div className="mt-6">
         <button
           onClick={() => handleContinue()}
-          className="bg-primary text-white p-2 px-4 rounded-lg block w-full"
+          className="black_button w-full"
         >
           Continue
         </button>

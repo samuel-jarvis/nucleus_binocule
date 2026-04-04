@@ -11,20 +11,14 @@ type IProperty = {
   value: string;
   type: string;
   label: string;
-  iconImage: string;
+  example: string;
+  tag?: "primary" | "secondary";
+  icon?: string | null;
 };
 
 type Props = {
   fields: IProperty[] | any;
-  setFields: (
-    fields: {
-      value: string;
-      type: string;
-      label: string;
-      example: string;
-      iconImage?: string;
-    }[]
-  ) => void;
+  setFields: (fields: IProperty[]) => void;
   updateField?: IProperty | any;
   setSingleField: any;
 };
@@ -55,6 +49,7 @@ const AddFieldsModal = ({
   const [type, setType] = useState("text"); // input/form type
   const [label, setLabel] = useState("");
   const [example, setExample] = useState("");
+  const [tag, setTag] = useState<"primary" | "secondary">("primary");
   const [iconImage, setIconImage] = useState("");
 
   const [button, setButton] = useState("Add Field");
@@ -68,6 +63,9 @@ const AddFieldsModal = ({
       setValue(updateField.value);
       setType(updateField.type);
       setLabel(updateField.label);
+      setExample(updateField.example || "");
+      setTag(updateField.tag ?? "primary");
+      setIconImage(updateField.icon || "");
 
       setButton("Update Field");
       setIsModalOpen(true);
@@ -88,20 +86,29 @@ const AddFieldsModal = ({
     if (button === "Add Field") {
       setFields([
         ...fields,
-        { value, type, label, example, icon: iconImage || null },
+        { value, type, label, example, tag, icon: iconImage || null },
       ]);
       // clear input fields
       setValue("");
       setType("text");
       setLabel("");
       setExample("");
+      setTag("primary");
       setIconImage("");
     } else {
       if (!updateField) return;
 
       const newFields = fields.map((f: any) => {
         if (f.value === updateField.value) {
-          return { value, type, label };
+          return {
+            ...f,
+            value,
+            type,
+            label,
+            example,
+            tag,
+            icon: iconImage || null,
+          };
         }
 
         return f;
@@ -112,9 +119,11 @@ const AddFieldsModal = ({
       // clear input fields
       setSingleField(null);
       setValue("");
-      setType("");
+      setType("text");
       setLabel("");
       setExample("");
+      setTag("primary");
+      setIconImage("");
     }
 
     setIsModalOpen(false);
@@ -251,7 +260,7 @@ const AddFieldsModal = ({
               </AlertDialog.Title>
 
               <AlertDialog.Description className="text-sm text-gray-600 hidden">
-                {button === "Add Field"? "Add a new field" : "Update field"}
+                {button === "Add Field" ? "Add a new field" : "Update field"}
               </AlertDialog.Description>
 
               <AlertDialog.Cancel asChild>
@@ -294,6 +303,20 @@ const AddFieldsModal = ({
                 onChange={(e) => setExample(e.target.value)}
                 className="p-2 w-full rounded-lg border-2"
               />
+            </div>
+
+            <div className="mt-3">
+              <label className="text-sm text-gray-600">Tag</label>
+              <select
+                value={tag}
+                onChange={(e) =>
+                  setTag(e.target.value as "primary" | "secondary")
+                }
+                className="p-2 w-full rounded-lg border-2"
+              >
+                <option value="primary">Primary</option>
+                <option value="secondary">Secondary</option>
+              </select>
             </div>
 
             <div className="hidden mt-3">

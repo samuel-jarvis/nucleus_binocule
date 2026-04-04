@@ -1,4 +1,4 @@
-import { RxHamburgerMenu } from "react-icons/rx";
+import { CgMenuLeft } from "react-icons/cg";
 import FullLogo from "../../.../../../assets/logo/logo.png";
 import { BsPersonCircle } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -12,7 +12,7 @@ const TopBar = () => {
     <div>
       <div className="flex justify-between items-center px-4 py-4 bg-white shadow-sm">
         <div className="flex items-center">
-          <RxHamburgerMenu className="text-3xl text-black cursor-pointer" />
+          <CgMenuLeft className="text-3xl text-black cursor-pointer" />
           <Link to="/home" className="flex items-center ml-3">
             <img src={FullLogo} alt="logo" className="h-8" />
             <p className="text-3xl text-black font-bold ml-2">Nucleus</p>
@@ -25,7 +25,7 @@ const TopBar = () => {
               <img
                 src={user.photo.url}
                 alt="profile"
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-2xl object-cover"
               />
             ) : (
               <BsPersonCircle className="text-3xl text-gray-500 cursor-pointer" />
