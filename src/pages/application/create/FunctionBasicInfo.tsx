@@ -10,21 +10,21 @@ type FunctionBasicInfoProps = {
 };
 
 const categoryList = [
-  "Storage",
-  "Transportation",
-  "Protection",
-  "Communication",
-  "Measurement",
-  "Illumination",
-  "Cutting",
-  "Heating",
-  "Cooling",
-  "Containment",
-  "Support",
-  "Decoration",
-  "Cleaning",
-  "Construction",
-  "Navigation"
+  "Dining & Food",
+  "Shopping",
+  "Entertainment & Leisure",
+  "Sports & Fitness",
+  "Education & Learning",
+  "Healthcare & Wellness",
+  "Work & Professional",
+  "Social & Community",
+  "Religious & Spiritual",
+  "Travel & Mobility",
+  "Lodging & Accommodation",
+  "Events & Experiences",
+  "Personal Services",
+  "Daily Living & Errands",
+  "Others",
 ];
 
 const FunctionBasicInfo = ({
