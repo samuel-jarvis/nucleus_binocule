@@ -10,21 +10,20 @@ type FunctionBasicInfoProps = {
 };
 
 const categoryList = [
-  "Dining & Food",
-  "Shopping",
-  "Entertainment & Leisure",
-  "Sports & Fitness",
-  "Education & Learning",
-  "Healthcare & Wellness",
-  "Work & Professional",
+  "Transportation",
+  "Energy",
+  "Manufacturing & Industry",
+  "Construction & Real Estate",
+  "Commerce & Trade",
+  "Finance",
+  "Healthcare",
+  "Education",
+  "Agriculture & Food",
+  "Government & Public Services",
   "Social & Community",
-  "Religious & Spiritual",
-  "Travel & Mobility",
-  "Lodging & Accommodation",
-  "Events & Experiences",
-  "Personal Services",
-  "Daily Living & Errands",
-  "Others",
+  "Entertainment & Media",
+  "Environment & Sustainability",
+  "Research & Science",
 ];
 
 const FunctionBasicInfo = ({

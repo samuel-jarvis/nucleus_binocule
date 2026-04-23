@@ -12,21 +12,20 @@ type Props = {
 };
 
 const CategoryList = [
-  "Dining",
+  "Dining & Food",
   "Shopping",
-  "Entertainment",
-  "Sports",
-  "Education",
-  "Healthcare",
-  "Work",
-  "Social Gathering",
-  "Religious Worship",
-  "Travel/Transit",
-  "Recreation",
-  "Fitness/Exercise",
-  "Lodging",
-  "Events/Exhibitions",
+  "Entertainment & Leisure",
+  "Sports & Fitness",
+  "Education & Learning",
+  "Healthcare & Wellness",
+  "Work & Professional",
+  "Social & Community",
+  "Religious & Spiritual",
+  "Travel & Mobility",
+  "Lodging & Accommodation",
+  "Events & Experiences",
   "Personal Services",
+  "Daily Living & Errands",
   "Others",
 ];
 
