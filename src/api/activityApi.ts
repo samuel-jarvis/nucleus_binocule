@@ -7,8 +7,8 @@ const ActivityApi = {
     return response.data;
   },
 
-  getAllActivity: async () => {
-    const response = await api.get("/activity");
+  getAllActivity: async (params?: any) => {
+    const response = await api.get("/activity", { params });
     return response.data;
   },
 

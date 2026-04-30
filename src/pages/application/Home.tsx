@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import HomeIllustration from "../../assets/illustrations/new_home_illus.png";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
@@ -6,13 +6,18 @@ import { FaPlus } from "react-icons/fa6";
 import functionIcon from "../../assets/icons/function.png";
 import rwoIcon from "../../assets/icons/object.png";
 import AllNucleus from "./components/AllNucleus";
+import AllActivities from "./components/AllActivities";
 // import activityIcon from "../../assets/icons/activity.png";
 
 const Home = () => {
+  const [activeTab, setActiveTab] = useState<"templates" | "activities">(
+    "templates",
+  );
+
   return (
     <div className="px-4 mb-10">
       <div className="mt-8">
-        <h2 className="text-2xl font-semibold text-center">Create Templates</h2>
+        <h2 className="text-2xl font-bold text-center">Create Templates</h2>
         <p className="text-center text-gray-600">
           For anything of the real world
         </p>
@@ -120,7 +125,37 @@ const Home = () => {
       </div>
 
       <div className="mt-8">
-        <AllNucleus size={6} />
+        <div className="flex gap-4 border-b pb-2 mb-4">
+          <button
+            type="button"
+            className={`font-semibold text-lg ${
+              activeTab === "templates"
+                ? "text-blue-500 border-b-2 border-blue-500"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("templates")}
+          >
+            Templates
+          </button>
+          <button
+            type="button"
+            className={`font-semibold text-lg ${
+              activeTab === "activities"
+                ? "text-blue-500 border-b-2 border-blue-500"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("activities")}
+          >
+            Activities
+          </button>
+        </div>
+
+        <div className={activeTab === "templates" ? "block" : "hidden"}>
+          <AllNucleus size={6} />
+        </div>
+        <div className={activeTab === "activities" ? "block" : "hidden"}>
+          <AllActivities size={6} />
+        </div>
       </div>
     </div>
   );
