@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import ActivityApi from "../../../api/activityApi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { textShortener } from "../../../utility";
 
 interface IActivityResponse {
@@ -23,7 +23,7 @@ interface IProps {
 const AllActivities = ({ title, size }: IProps) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<IActivityResponse[]>([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const fetchData = () => {
     setLoading(true);
@@ -49,7 +49,9 @@ const AllActivities = ({ title, size }: IProps) => {
 
   if (loading) {
     return (
-      <p className="my-8 font-medium text-center text-black">Loading Activities</p>
+      <p className="my-8 font-medium text-center text-black">
+        Loading Activities
+      </p>
     );
   }
 
@@ -71,10 +73,7 @@ const AllActivities = ({ title, size }: IProps) => {
       <div className="mt-4">
         <div className="grid md:grid-cols-2 gap-4">
           {data.map((activity) => (
-            <div
-              key={activity._id}
-              className="p-4 rounded-lg bg-[#F9F9F9]"
-            >
+            <div key={activity._id} className="p-4 rounded-lg bg-[#F9F9F9]">
               <div className="flex items-center">
                 <img
                   className="object-cover mr-2 w-10 h-10 rounded-lg"
@@ -87,7 +86,9 @@ const AllActivities = ({ title, size }: IProps) => {
                 <div>
                   <h4 className="font-bold">{activity.title}</h4>
                   <p className="text-sm text-gray-600">
-                    {activity.description ? textShortener(activity.description, 60) : ""}
+                    {activity.description
+                      ? textShortener(activity.description, 60)
+                      : ""}
                   </p>
                   <div className="text-sm text-gray-600">
                     Category: {activity.category}
@@ -97,9 +98,7 @@ const AllActivities = ({ title, size }: IProps) => {
             </div>
           ))}
           {data.length === 0 && (
-            <div className="col-span-2 text-gray-500">
-              No activities found
-            </div>
+            <div className="col-span-2 text-gray-500">No activities found</div>
           )}
         </div>
       </div>
