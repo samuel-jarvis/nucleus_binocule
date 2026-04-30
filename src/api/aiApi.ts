@@ -6,6 +6,10 @@ const AiAPI = {
     const response = await api.post("/ai/generate", { item });
     return response.data;
   },
+  generateFunction: async (title: string, objectNames?: string[]) => {
+    const response = await api.post("/ai/generate-function", { title, objectNames });
+    return response.data;
+  },
 };
 
 export default AiAPI;

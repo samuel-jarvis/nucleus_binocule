@@ -27,10 +27,18 @@ const FunctionAttributes = ({
   const [singleField, setSingleField] = useState({} as IProperty | null);
 
   useEffect(() => {
-    setFormData({
-      ...formData,
-      attributes: fields,
-    });
+    if (formData.attributes !== fields) {
+      setFields(formData.attributes);
+    }
+  }, [formData.attributes]);
+
+  useEffect(() => {
+    if (formData.attributes !== fields) {
+      setFormData({
+        ...formData,
+        attributes: fields,
+      });
+    }
   }, [fields]);
 
   const handleRemoveField = (index: number) => {

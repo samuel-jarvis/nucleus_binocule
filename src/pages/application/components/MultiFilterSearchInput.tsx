@@ -15,13 +15,20 @@ type NucleusItem = {
 type Props = {
   selectedIds: string[];
   setSelectedIds: (ids: string[]) => void;
+  onSelectedItemsChange?: (items: NucleusItem[]) => void;
 };
 
-const MultiFilterSearchInput = ({ selectedIds, setSelectedIds }: Props) => {
+const MultiFilterSearchInput = ({ selectedIds, setSelectedIds, onSelectedItemsChange }: Props) => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState<NucleusItem[]>([]);
   const [selectedItems, setSelectedItems] = useState<NucleusItem[]>([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (onSelectedItemsChange) {
+      onSelectedItemsChange(selectedItems);
+    }
+  }, [selectedItems, onSelectedItemsChange]);
 
   useEffect(() => {
     if (!searchInput.trim()) {
