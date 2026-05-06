@@ -23,6 +23,12 @@ interface AiResponse {
   description: string;
   mobilityType: string;
   attributes: (Omit<IProperty, "tag"> & { tag?: PropertyTag })[];
+  associations?: {
+    creator?: string[];
+    owner?: string[];
+    user?: string[];
+    inCharge?: string[];
+  };
 }
 
 export interface IRealWorldObject {
@@ -46,7 +52,7 @@ export interface IRealWorldObject {
 
 const CreateRWO = () => {
   const [realWorldObject, setRealWorldObject] = useState<IRealWorldObject>({
-    primaryNature: "things",
+    primaryNature: "",
     topLevelObject: "",
     category: "",
     parentTemplate: "",
@@ -73,8 +79,8 @@ const CreateRWO = () => {
     console.log(data);
 
     const response: AiResponse = data.message[0];
-    setRealWorldObject({
-      ...realWorldObject,
+    setRealWorldObject((prev) => ({
+      ...prev,
       title: item,
       description: response.description,
       mobilityType: response.mobilityType,
@@ -82,7 +88,13 @@ const CreateRWO = () => {
         ...attr,
         tag: attr.tag ?? "primary",
       })),
-    });
+      associations: {
+        creator: response.associations?.creator ?? prev.associations.creator,
+        owner: response.associations?.owner ?? prev.associations.owner,
+        user: response.associations?.user ?? prev.associations.user,
+        inCharge: response.associations?.inCharge ?? prev.associations.inCharge,
+      },
+    }));
   };
 
   return (
@@ -95,10 +107,38 @@ const CreateRWO = () => {
         <Tabs.Content value="get_started">
           <div className="max-w-2xl mx-auto p-2">
             <h2 className="text-2xl font-bold mb-6 text-center">
-              How would you like to create your Real World Object?
+              What would you like to create?
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-4">
+              {/* Human Nucleus Option */}
+              <div
+                className="border-2 border-purple-200 rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer hover:border-purple-400 bg-purple-50"
+                onClick={() => {
+                  setRealWorldObject({
+                    ...realWorldObject,
+                    primaryNature: "human",
+                    title: "Human",
+                    mobilityType: "dynamic",
+                  });
+                  setSelectedTab("basic_info");
+                }}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-purple-800">Create Human Nucleus</h3>
+                    <p className="text-sm text-purple-600">
+                      The global human template — enables users to pin themselves to scapes. Only one should exist.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* AI Generation Option */}
               <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="text-center">
@@ -117,12 +157,9 @@ const CreateRWO = () => {
                       />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Use AI Generation
-                  </h3>
+                  <h3 className="text-lg font-semibold mb-2">Use AI Generation</h3>
                   <p className="text-gray-600 mb-4">
-                    Let AI help you generate properties and attributes based on
-                    your object description
+                    Let AI help you generate properties and attributes based on your object description
                   </p>
 
                   <div className="space-y-3">
@@ -135,18 +172,17 @@ const CreateRWO = () => {
                       disabled={isGenerating}
                     />
                     <button
-                      onClick={async () => {
+                      onClick={async (e) => {
+                        e.stopPropagation();
                         if (aiInput.trim()) {
                           setIsGenerating(true);
                           try {
+                            setRealWorldObject({ ...realWorldObject, primaryNature: "things" });
                             await generateProperties(aiInput.trim());
                             setSelectedTab("basic_info");
                             setAiInput("");
                           } catch (error) {
-                            console.error(
-                              "Error generating properties:",
-                              error,
-                            );
+                            console.error("Error generating properties:", error);
                           } finally {
                             setIsGenerating(false);
                           }
@@ -163,19 +199,8 @@ const CreateRWO = () => {
                             fill="none"
                             viewBox="0 0 24 24"
                           >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            ></path>
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
                           Generating...
                         </>
@@ -183,46 +208,18 @@ const CreateRWO = () => {
                         "Generate with AI"
                       )}
                     </button>
-                    <p>or</p>
+                    <p className="text-sm text-gray-400">or</p>
                     <button
-                      onClick={() => setSelectedTab("basic_info")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setRealWorldObject({ ...realWorldObject, primaryNature: "things" });
+                        setSelectedTab("basic_info");
+                      }}
                       className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors"
                     >
                       Start Manual Entry
                     </button>
                   </div>
-                </div>
-              </div>
-
-              {/* Manual Entry Option */}
-              <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow hidden">
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-8 h-8 text-green-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">Enter Manually</h3>
-                  <p className="text-gray-600 mb-4">
-                    Create your real world object by manually entering all the
-                    details
-                  </p>
-                  <button
-                    onClick={() => setSelectedTab("basic_info")}
-                    className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors"
-                  >
-                    Start Manual Entry
-                  </button>
                 </div>
               </div>
             </div>

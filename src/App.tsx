@@ -14,7 +14,7 @@ import NucleusList from "./pages/application/NucleusList";
 import CreateActivity from "./pages/application/create/CreateActivity";
 import ActivityList from "./pages/application/ActivityList";
 
-const App = () => {
+const App = () => { 
   return (
     <div>
       <BrowserRouter>
