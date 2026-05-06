@@ -1,16 +1,12 @@
-import React, { useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { ProfileApi } from '../../api/profileApi';
-import { toast } from 'react-toastify';
-import { logout, updateUser } from '../../reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { GoSignOut } from 'react-icons/go';
+import { HiOutlineEnvelope, HiOutlinePhone, HiOutlineMapPin, HiOutlineClock } from 'react-icons/hi2';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { logout } from '../../reducers/authSlice';
+import { APP_LINKS } from '../../constants/appLinks';
 
 export interface IUser {
-  photo: {
-    url: string;
-    publicId: string;
-  };
+  photo: { url: string; publicId: string };
   _id: string;
   firstName: string;
   lastName: string;
@@ -20,137 +16,105 @@ export interface IUser {
   byteId: string;
   country: string;
   isEnabled: boolean;
-  lastLogin: string; // Assuming ISO 8601 format
+  lastLogin: string;
+  profileImages?: { url: string; publicId: string }[];
 }
 
+const InfoRow = ({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string }) => (
+  <div className="flex items-center gap-3 py-3 border-b border-gray-50 last:border-0">
+    <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center shrink-0">
+      <Icon className="w-4 h-4 text-gray-500" />
+    </div>
+    <div>
+      <p className="text-xs text-gray-400">{label}</p>
+      <p className="text-sm font-medium text-gray-800">{value || '—'}</p>
+    </div>
+  </div>
+);
+
 const Profile = () => {
-  const dispatch = useAppDispatch();
   const user: IUser = useAppSelector((state) => state.auth.user);
-
-  console.log(user);
-
-  const [userData, setUserData] = useState<IUser>(user);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
-  }
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(userData);
-  }
-
-  // const [profileImage, setProfileImage] = useState<File | null>(null);
-
-  const handleProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      return;
-    }
-
-    const file = e.target.files[0];
-    console.log(file);
-
-    ProfileApi.uploadProfileImage(file)
-      .then((data) => {
-        console.log(data);
-        if (data.user) {
-          dispatch(updateUser(data.user));
-        }
-        toast.success('Profile image uploaded successfully');
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error('Profile image upload failed');
-      });
-  }
-
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate('/');
   };
 
+  const profileImages = user.profileImages || [];
+
   return (
-    <div className='max-w-[800px] mx-auto mt-4 px-4'>
-      <h1
-        className='mb-10 text-2xl font-bold'
-      >Profile</h1>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-xl mx-auto px-4 py-8">
 
-      {/* profile image */}
-      <div>
-        <img
-          className='object-cover m-auto mb-10 w-36 h-32 text-center rounded-3xl'
-          src={userData.photo.url || 'https://avatar.iran.liara.run/public/boy?username=Ash'} alt="profile" />
+        {/* Profile card */}
+        <div className="bg-white rounded-2xl shadow-sm p-6 mb-4 text-center">
+          <img
+            src={user.photo?.url || 'https://avatar.iran.liara.run/public/boy?username=Ash'}
+            alt="avatar"
+            className="w-24 h-24 rounded-full object-cover mx-auto mb-4 ring-4 ring-gray-50"
+          />
+          <h1 className="text-xl font-bold text-gray-900">
+            {user.firstName} {user.lastName}
+          </h1>
+          <span className="inline-block mt-2 px-3 py-1 bg-gray-100 text-gray-500 text-xs font-mono rounded-full uppercase tracking-wide">
+            {user.byteId}
+          </span>
+        </div>
 
-        <label htmlFor="" className='block m-auto text-center'>
-          UpdateProfile Image
-        </label>
-        <input
-          className='block m-auto text-center'
-          type="file" id="photo" name="photo" onChange={(e) => handleProfileImage(e)} />
-      </div>
+        {/* Info */}
+        <div className="bg-white rounded-2xl shadow-sm px-5 mb-4">
+          <InfoRow icon={HiOutlineEnvelope} label="Email" value={user.email} />
+          <InfoRow icon={HiOutlinePhone} label="Phone" value={user.phoneNumber} />
+          <InfoRow icon={HiOutlineMapPin} label="Country" value={user.country} />
+          {user.lastLogin && (
+            <InfoRow
+              icon={HiOutlineClock}
+              label="Last Login"
+              value={new Date(user.lastLogin).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+            />
+          )}
+        </div>
 
-      <form onSubmit={handleSubmit}>
-        <div
-          className='mb-4'
+        {/* Profile images strip */}
+        {profileImages.length > 0 && (
+          <div className="bg-white rounded-2xl shadow-sm p-5 mb-4">
+            <h2 className="text-sm font-semibold text-gray-700 mb-3">Profile Images</h2>
+            <div className="flex gap-3 overflow-x-auto pb-1">
+              {profileImages.map((img) => (
+                <img
+                  key={img.publicId}
+                  src={img.url}
+                  alt="profile"
+                  className="w-20 h-20 rounded-xl object-cover shrink-0"
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Manage Account CTA */}
+        <a
+          href={APP_LINKS.digitizer}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full text-center py-3 bg-black text-white text-sm font-medium rounded-2xl hover:bg-gray-800 transition-colors mb-3"
         >
-          <label htmlFor="firstName">First Name</label>
-          <input
-            className='block p-2 w-full rounded-md border border-gray-300'
-            type="text" id="firstName" name="firstName" value={userData.firstName} onChange={handleChange} />
-        </div>
-        <div
-          className='mb-4'
-        >
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            className='block p-2 w-full rounded-md border border-gray-300'
-            type="text" id="lastName" name="lastName" value={userData.lastName} onChange={handleChange} />
-        </div>
-        <div
-          className='mb-4'
-        >
-          <label htmlFor="email">Email</label>
-          <input
-            className='block p-2 w-full rounded-md border border-gray-300'
-            type="email" id="email" name="email" value={userData.email} onChange={handleChange} />
-        </div>
-        <div
-          className='mb-4'
-        >
-          <label htmlFor="phoneNumber">Phone Number</label>
-          <input
-            className='block p-2 w-full rounded-md border border-gray-300'
-            type="text" id="phoneNumber" name="phoneNumber" value={userData.phoneNumber} onChange={handleChange} />
-        </div>
-        {/* byteId */}
-        <div
-          className='mb-4'
-        >
-          <label htmlFor="byteId">Byte ID</label>
-          <input
-            className='block p-2 w-full rounded-md border border-gray-300'
-            type="text" id="byteId" name="byteId" value={userData.byteId.toUpperCase()} onChange={handleChange} />
-        </div>
+          Manage Account
+        </a>
+
+        {/* Logout */}
         <button
-          className='block p-2 w-full text-white bg-blue-500 rounded-md'
-          type="submit">Submit</button>
-      </form>
-
-      <ul className="space-y-2 mt-10 mb-10">
-        <li className="font-bold bg-red-50 cursor-pointer">
-          <p
-            onClick={() => handleLogout()}
-            className="flex items-center p-4 space-x-2 text-red-500 rounded-2xl border-2 border-red-50 cursor-pointer"
-          >
-            <GoSignOut />
-            <span>Logout</span>
-          </p>
-        </li>
-      </ul>
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 py-3 bg-red-50 text-red-500 text-sm font-medium rounded-2xl hover:bg-red-100 transition-colors"
+        >
+          <GoSignOut className="w-4 h-4" />
+          Sign Out
+        </button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
